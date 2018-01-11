@@ -1,0 +1,16 @@
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\bin\Debug\AT-EngJournal.dll
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\bin\Debug\AT-EngJournal.pdb
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\bin\Debug\AT-EngJournal.xml
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\bin\Debug\AT-EngJournal.dll.manifest
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\bin\Debug\AT-EngJournal.vsto
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.vbprojResolveAssemblyReference.cache
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT_EngJournal.ASL_Ribbon.resources
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT_EngJournal.form_EmailSend.resources
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT_EngJournal.Resources.resources
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.vbproj.GenerateResource.Cache
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.vbproj.CoreCompileInputs.cache
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.dll
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.xml
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.pdb

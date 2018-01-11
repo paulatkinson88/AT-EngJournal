@@ -1,0 +1,111 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+AT-EngJournal
+</name>
+</assembly>
+<members>
+<member name="T:AT_EngJournal.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.face_laugh_2">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.network_connect_3">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="T:AT_EngJournal.ThisRibbonCollection">
+
+</member>
+<member name="M:AT_EngJournal.ThisRibbonCollection.#ctor(Microsoft.Office.Tools.Ribbon.RibbonFactory)">
+
+</member>
+<member name="T:AT_EngJournal.ThisAddIn">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.#ctor(Microsoft.Office.Tools.Outlook.Factory,System.IServiceProvider)">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.Initialize">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.FinishInitialization">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.InitializeDataBindings">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.InitializeCachedData">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.InitializeData">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.BindToData">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.StartCaching(System.String)">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.StopCaching(System.String)">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.IsCached(System.String)">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.BeginInitialization">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.EndInitialization">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.InitializeControls">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.InitializeComponents">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.NeedsFill(System.String)">
+
+</member>
+<member name="M:AT_EngJournal.ThisAddIn.OnShutdown">
+
+</member>
+<member name="T:AT_EngJournal.Globals">
+
+</member>
+<member name="M:AT_EngJournal.Globals.#ctor">
+
+</member>
+<member name="T:AT_EngJournal.ThisFormRegionCollection">
+
+</member>
+<member name="M:AT_EngJournal.ThisFormRegionCollection.#ctor(System.Collections.Generic.IList{Microsoft.Office.Tools.Outlook.IFormRegion})">
+
+</member>
+<member name="T:AT_EngJournal.WindowFormRegionCollection">
+
+</member>
+<member name="M:AT_EngJournal.WindowFormRegionCollection.#ctor(System.Collections.Generic.IList{Microsoft.Office.Tools.Outlook.IFormRegion})">
+
+</member>
+</members>
+</doc>
