@@ -43,7 +43,7 @@ Partial Class form_EmailSend
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Location = New System.Drawing.Point(12, 12)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(455, 89)
+        Me.Panel1.Size = New System.Drawing.Size(469, 89)
         Me.Panel1.TabIndex = 6
         '
         'PictureBox1
@@ -59,10 +59,10 @@ Partial Class form_EmailSend
         '
         Me.Label1.Location = New System.Drawing.Point(14, 16)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(433, 27)
+        Me.Label1.Size = New System.Drawing.Size(440, 27)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "If you wish to record this email, please enter a job number in the text box and s" &
-    "elect store."
+    "elect Record."
         '
         'TextBox1
         '
@@ -77,7 +77,7 @@ Partial Class form_EmailSend
         Me.button_record.Name = "button_record"
         Me.button_record.Size = New System.Drawing.Size(90, 30)
         Me.button_record.TabIndex = 3
-        Me.button_record.Text = "Store"
+        Me.button_record.Text = "Record"
         Me.button_record.UseVisualStyleBackColor = True
         '
         'Label2
@@ -92,7 +92,7 @@ Partial Class form_EmailSend
         'button_skip
         '
         Me.button_skip.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.button_skip.Location = New System.Drawing.Point(377, 116)
+        Me.button_skip.Location = New System.Drawing.Point(391, 116)
         Me.button_skip.Name = "button_skip"
         Me.button_skip.Size = New System.Drawing.Size(90, 30)
         Me.button_skip.TabIndex = 7
@@ -105,7 +105,7 @@ Partial Class form_EmailSend
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.button_skip
-        Me.ClientSize = New System.Drawing.Size(482, 153)
+        Me.ClientSize = New System.Drawing.Size(493, 149)
         Me.ControlBox = False
         Me.Controls.Add(Me.button_skip)
         Me.Controls.Add(Me.Panel1)

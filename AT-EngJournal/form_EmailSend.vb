@@ -9,6 +9,7 @@
     End Sub
 
     Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+        'do not enable the record button unless the project number selected is 4 digits and numeric.
         If TextBox1.Text.Length = 4 And IsNumeric(TextBox1.Text) Then
             button_record.Enabled = True
         Else

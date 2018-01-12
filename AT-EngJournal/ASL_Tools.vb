@@ -4,6 +4,7 @@ Module ASL_Tools
     Public app As Outlook.Application
 
     Public networkReady As Boolean = False
+    Public aslStore As Outlook.Store
 
 
     Public Function Check_For_Network() As Boolean
@@ -65,6 +66,79 @@ Module ASL_Tools
             Debug.Print(test)
             retVal = test
         End If
+        Return retVal
+    End Function
+
+    Public Sub Get_ASL_Store()
+        Dim app As Outlook.Application = Globals.ThisAddIn.Application
+
+        Dim stores As Outlook.Stores = app.Session.Stores
+
+        For Each st As Outlook.Store In stores
+            Debug.Print(st.DisplayName & " - " & st.FilePath)
+
+            If st.DisplayName.Contains("@asltd.com") Then
+                ASL_Tools.aslStore = st
+                Exit For
+            End If
+        Next
+
+    End Sub
+
+    Public Sub Get_ASL_Store_Folders()
+        If IsNothing(ASL_Tools.aslStore) Then
+            ASL_Tools.Get_ASL_Store()
+        End If
+
+        If IsNothing(ASL_Tools.aslStore) Then
+            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
+            Exit Sub
+        End If
+
+        Dim rtFld As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
+
+        For Each fld As Outlook.Folder In rtFld.Folders
+            If fld.Name = "Inbox" Then
+                For Each subFld As Outlook.Folder In fld.Folders
+                    Debug.Print("     Sub Name: " & subFld.Name)
+                Next
+            End If
+            Debug.Print("   Name: " & fld.Name)
+        Next
+    End Sub
+
+    Public Function Get_ProjectFolder_From_ASL_Store_Inbox(ByVal proj As String) As Outlook.Folder
+        Dim retVal As Outlook.Folder = Nothing
+
+        If IsNothing(ASL_Tools.aslStore) Then
+            ASL_Tools.Get_ASL_Store()
+        End If
+
+        If Not (IsNothing(ASL_Tools.aslStore)) Then
+            'if the store is in memory then look at the root of the folder
+            'then select the inbox foulder and get the sub folders in it.
+
+            Dim rtFld As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
+
+            For Each fld As Outlook.Folder In rtFld.Folders
+                If fld.Name = "Inbox" Then
+                    For Each subFld As Outlook.Folder In fld.Folders
+                        If subFld.Name.Substring(0, 4) = proj Then
+                            'if the first four characters of the folder name
+                            'match the project number then we have found our folder
+
+                            retVal = subFld
+                            Exit For
+
+                        End If
+                    Next
+                End If
+            Next
+
+        Else
+            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
+        End If
+
         Return retVal
     End Function
 End Module

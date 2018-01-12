@@ -47,6 +47,7 @@
         Me.Button1 = Me.Factory.CreateRibbonButton
         Me.Group2 = Me.Factory.CreateRibbonGroup
         Me.Button2 = Me.Factory.CreateRibbonButton
+        Me.Button3 = Me.Factory.CreateRibbonButton
         Me.Tab1.SuspendLayout()
         Me.Group1.SuspendLayout()
         Me.Group2.SuspendLayout()
@@ -82,6 +83,7 @@
         'Group2
         '
         Me.Group2.Items.Add(Me.Button2)
+        Me.Group2.Items.Add(Me.Button3)
         Me.Group2.Label = "Group2"
         Me.Group2.Name = "Group2"
         '
@@ -90,10 +92,17 @@
         Me.Button2.Label = "Button2"
         Me.Button2.Name = "Button2"
         '
+        'Button3
+        '
+        Me.Button3.Label = "Button3"
+        Me.Button3.Name = "Button3"
+        '
         'ASL_Ribbon
         '
         Me.Name = "ASL_Ribbon"
-        Me.RibbonType = "Microsoft.Outlook.Mail.Read"
+        Me.RibbonType = "Microsoft.Outlook.Explorer, Microsoft.Outlook.Mail.Compose, Microsoft.Outlook.Mai" &
+    "l.Read, Microsoft.Outlook.Post.Compose, Microsoft.Outlook.Post.Read, Microsoft.O" &
+    "utlook.Resend"
         Me.Tabs.Add(Me.Tab1)
         Me.Tab1.ResumeLayout(False)
         Me.Tab1.PerformLayout()
@@ -111,6 +120,7 @@
     Friend WithEvents Button1 As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents Group2 As Microsoft.Office.Tools.Ribbon.RibbonGroup
     Friend WithEvents Button2 As Microsoft.Office.Tools.Ribbon.RibbonButton
+    Friend WithEvents Button3 As Microsoft.Office.Tools.Ribbon.RibbonButton
 End Class
 
 Partial Class ThisRibbonCollection
