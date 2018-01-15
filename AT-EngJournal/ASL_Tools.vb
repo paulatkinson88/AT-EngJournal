@@ -6,6 +6,8 @@ Module ASL_Tools
     Public networkReady As Boolean = False
     Public aslStore As Outlook.Store
 
+    'global working project folder reference
+    Public wProjFld As Outlook.Folder
 
     Public Function Check_For_Network() As Boolean
         Dim retVal As Boolean = False
@@ -69,6 +71,12 @@ Module ASL_Tools
         Return retVal
     End Function
 
+    '=====================
+    'Finding the ASL Store
+    '=====================
+    ''' <summary>
+    ''' Finds the asl store in all the stores on the outlook application session
+    ''' </summary>
     Public Sub Get_ASL_Store()
         Dim app As Outlook.Application = Globals.ThisAddIn.Application
 
@@ -85,6 +93,9 @@ Module ASL_Tools
 
     End Sub
 
+    ''' <summary>
+    ''' Test function not used.
+    ''' </summary>
     Public Sub Get_ASL_Store_Folders()
         If IsNothing(ASL_Tools.aslStore) Then
             ASL_Tools.Get_ASL_Store()
@@ -107,7 +118,15 @@ Module ASL_Tools
         Next
     End Sub
 
-    Public Function Get_ProjectFolder_From_ASL_Store_Inbox(ByVal proj As String) As Outlook.Folder
+    '====================
+    'ASL Store Functions
+    '====================
+    ''' <summary>
+    ''' Finds the project folder in the ASL store and returns a reference to it
+    ''' </summary>
+    ''' <param name="proj"></param>
+    ''' <returns></returns>
+    Public Function Get_ProjectFolder_In_ASLStoreInbox(ByVal proj As String) As Outlook.Folder
         Dim retVal As Outlook.Folder = Nothing
 
         If IsNothing(ASL_Tools.aslStore) Then
@@ -141,4 +160,71 @@ Module ASL_Tools
 
         Return retVal
     End Function
+
+    ''' <summary>
+    ''' creates a new project folder in the inbox and returns the reference.
+    ''' </summary>
+    ''' <param name="proj"></param>
+    ''' <returns></returns>
+    Public Function Create_ProjectFolder_In_ASLStoreInbox(ByVal proj As String) As Outlook.Folder
+        Dim retVal As Outlook.Folder = Nothing
+
+        If IsNothing(ASL_Tools.aslStore) Then
+            ASL_Tools.Get_ASL_Store()
+        End If
+
+        If Not (IsNothing(ASL_Tools.aslStore)) Then
+            'if the store is in memory then look at the root of the folder
+            'then select the inbox folder and get the sub folders in it.
+
+            Dim rtFld As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
+
+            For Each fld As Outlook.Folder In rtFld.Folders
+                If fld.Name = "Inbox" Then
+                    retVal = fld.Folders.Add(proj)
+                    Exit For
+                End If
+            Next
+
+        Else
+            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
+        End If
+
+        Return retVal
+    End Function
+
+    ''' <summary>
+    ''' Checks to see if the ProjectFolderSend exists a passed outlook folder reference
+    ''' </summary>
+    ''' <param name="pf"></param>
+    ''' <returns></returns>
+    Public Function Get_ProjectFolderSent(ByVal pf As Outlook.Folder) As Outlook.Folder
+        Dim retVal As Outlook.Folder = Nothing
+
+        If Not (IsNothing(pf)) Then
+            For Each fld As Outlook.Folder In pf.Folders
+                If fld.Name = "SENT" Then
+                    retVal = fld
+                    Exit For
+                End If
+            Next
+        End If
+
+        Return retVal
+    End Function
+
+    ''' <summary>
+    ''' create sent folder to a ProjectFolder passed by the user
+    ''' check to see if one exists first.
+    ''' </summary>
+    ''' <param name="pf"></param>
+    ''' <returns></returns>
+    Public Function Create_ProjectFolderSent(ByVal pf As Outlook.Folder) As Outlook.Folder
+        Dim fld As Outlook.Folder = Nothing
+
+        fld = pf.Folders.Add("SENT")
+
+        Return fld
+    End Function
+
 End Module

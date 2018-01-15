@@ -38,6 +38,45 @@ AT-EngJournal
 <member name="M:AT_EngJournal.ThisRibbonCollection.#ctor(Microsoft.Office.Tools.Ribbon.RibbonFactory)">
 
 </member>
+<member name="M:AT_EngJournal.ASL_Tools.Get_ASL_Store">
+ <summary>
+ Finds the asl store in all the stores on the outlook application session
+ </summary>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.Get_ASL_Store_Folders">
+ <summary>
+ Test function not used.
+ </summary>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.Get_ProjectFolder_In_ASLStoreInbox(System.String)">
+ <summary>
+ Finds the project folder in the ASL store and returns a reference to it
+ </summary>
+ <param name="proj"></param>
+ <returns></returns>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.Create_ProjectFolder_In_ASLStoreInbox(System.String)">
+ <summary>
+ creates a new project folder in the inbox and returns the reference.
+ </summary>
+ <param name="proj"></param>
+ <returns></returns>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.Get_ProjectFolderSent(Microsoft.Office.Interop.Outlook.Folder)">
+ <summary>
+ Checks to see if the ProjectFolderSend exists a passed outlook folder reference
+ </summary>
+ <param name="pf"></param>
+ <returns></returns>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.Create_ProjectFolderSent(Microsoft.Office.Interop.Outlook.Folder)">
+ <summary>
+ create sent folder to a ProjectFolder passed by the user
+ check to see if one exists first.
+ </summary>
+ <param name="pf"></param>
+ <returns></returns>
+</member>
 <member name="T:AT_EngJournal.ThisAddIn">
 
 </member>

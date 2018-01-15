@@ -17,6 +17,7 @@
         If senderDomain = "asltd.com" Then
             Dim frm As form_EmailSend = New form_EmailSend
             frm.button_record.Enabled = False
+            frm.Item = Item
             frm.ShowDialog()
 
             frm.Close()

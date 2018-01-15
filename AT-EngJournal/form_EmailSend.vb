@@ -1,9 +1,41 @@
 ﻿Public Class form_EmailSend
-    Private Sub button_record_Click(sender As Object, e As EventArgs) Handles button_record.Click
-        'check that the project the user selected actually exists.
 
+    Public Item As Outlook.MailItem
+
+    Private Sub button_record_Click(sender As Object, e As EventArgs) Handles button_record.Click
+        'begin the structure for the send function
+        Dim proj As String = TextBox1.Text
+
+        'copy the message to the folder
+        '   find the projectfolder in the aslstore
+        Dim fld As Outlook.Folder = ASL_Tools.Get_ProjectFolder_In_ASLStoreInbox(proj)
+
+        'if the project is not found then create it.
+        If IsNothing(fld) Then
+            MsgBox("No Project Found", vbCritical, "Error")
+            'create the project folder
+            fld = ASL_Tools.Create_ProjectFolder_In_ASLStoreInbox(proj)
+            If IsNothing(fld) Then
+                MsgBox("Error getting or creating project", vbCritical, "Error")
+                Exit Sub
+            End If
+        End If
+
+        'with the project folder
+        'get the sent folder
+        Dim fldSent As Outlook.Folder = ASL_Tools.Get_ProjectFolderSent(fld)
+
+        If IsNothing(fldSent) Then
+            fldSent = ASL_Tools.Create_ProjectFolderSent(fld)
+            If IsNothing(fldSent) Then
+                MsgBox("Error creating sent folder", vbCritical, "Error")
+                Exit Sub
+            End If
+        End If
 
         'if the project exists then store the message information to the server
+        MsgBox(Item.GetType.ToString)
+
 
         Me.Close()
     End Sub

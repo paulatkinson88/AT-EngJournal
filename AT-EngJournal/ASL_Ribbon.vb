@@ -24,8 +24,6 @@ Public Class ASL_Ribbon
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As RibbonControlEventArgs) Handles Button2.Click
-        'MsgBox(asl.app.Inspectors.Count.ToString)
-
         Dim mIns As Outlook.Inspector = ASL_Tools.app.ActiveInspector
         If Not (IsNothing(mIns)) Then
             Debug.Print(mIns.GetType.ToString)
@@ -33,12 +31,42 @@ Public Class ASL_Ribbon
 
         Dim st As String = InputBox("Find Project:", "Find")
 
-        Dim fld As Outlook.Folder = ASL_Tools.Get_ProjectFolder_From_ASL_Store_Inbox(st)
+
+        'begin the structure for the send function
+
+        'copy the message to the folder
+        '   find the projectfolder in the aslstore
+
+        Dim fld As Outlook.Folder = ASL_Tools.Get_ProjectFolder_In_ASLStoreInbox(st)
+
+        'if the project is not found then create it.
         If IsNothing(fld) Then
             MsgBox("No Project Found", vbCritical, "Error")
-        Else
-            MsgBox("Folder NameOf: " & fld.Name & "  Message Count: " & fld.Items.Count.ToString)
+            'create the project folder
+            fld = ASL_Tools.Create_ProjectFolder_In_ASLStoreInbox(st)
+            If IsNothing(fld) Then
+                MsgBox("Error getting or creating project", vbCritical, "Error")
+                Exit Sub
+            End If
         End If
+
+        'with the project folder
+        'get the sent folder
+        Dim fldSent As Outlook.Folder = ASL_Tools.Get_ProjectFolderSent(fld)
+
+        If IsNothing(fldSent) Then
+            fldSent = ASL_Tools.Create_ProjectFolderSent(fld)
+            If IsNothing(fldSent) Then
+                MsgBox("Error creating sent folder", vbCritical, "Error")
+                Exit Sub
+            End If
+        End If
+
+        'we now have the project folder and the sent folder to save the sent message to.
+
+
+        MsgBox("Folder NameOf: " & fld.Name & "  Message Count: " & fld.Items.Count.ToString)
+
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As RibbonControlEventArgs) Handles Button3.Click
