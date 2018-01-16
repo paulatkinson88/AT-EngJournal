@@ -12,7 +12,7 @@
 
         'if the project is not found then create it.
         If IsNothing(fld) Then
-            MsgBox("No Project Found", vbCritical, "Error")
+            'MsgBox("No Project Found", vbCritical, "Error")
             'create the project folder
             fld = ASL_Tools.Create_ProjectFolder_In_ASLStoreInbox(proj)
             If IsNothing(fld) Then
@@ -34,8 +34,11 @@
         End If
 
         'if the project exists then store the message information to the server
-        MsgBox(Item.GetType.ToString)
-
+        Dim itemCopy As Outlook.MailItem = Item.Copy
+        Dim cD As Date = New Date.Now
+        Dim uS As String = ASL_Tools.aslStore.DisplayName
+        itemCopy.Subject = "(" & Format(cD, "yyyy-MM-dd:HHmmss") & " " & uS & ") " & itemCopy.Subject
+        itemCopy.Move(fldSent)
 
         Me.Close()
     End Sub
