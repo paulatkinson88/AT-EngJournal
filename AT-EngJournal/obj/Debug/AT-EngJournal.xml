@@ -22,7 +22,17 @@ AT-EngJournal
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:AT_EngJournal.My.Resources.Resources.face_glasses">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:AT_EngJournal.My.Resources.Resources.face_laugh_2">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.face_wink_4">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>

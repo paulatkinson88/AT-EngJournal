@@ -1,4 +1,6 @@
-﻿Public Class form_EmailSend
+﻿Imports System.Diagnostics
+
+Public Class form_EmailSend
 
     Public Item As Outlook.MailItem
 
@@ -10,8 +12,14 @@
         '   find the projectfolder in the aslstore
         Dim fld As Outlook.Folder = ASL_Tools.Get_ProjectFolder_In_ASLStoreInbox(proj)
 
-        'if the project is not found then create it.
+        'if the project is not found then 
+        'ask the user if they wish to create it or re enter a new
+        'project number
         If IsNothing(fld) Then
+            Dim rsp = MsgBox("Project folder not found." & vbLf & "Yes to Create Project folder" & vbLf & "No to Re-Enter Project Number", vbYesNo + vbCritical, "Error")
+            If rsp = vbNo Then
+                Exit Sub
+            End If
             'MsgBox("No Project Found", vbCritical, "Error")
             'create the project folder
             fld = ASL_Tools.Create_ProjectFolder_In_ASLStoreInbox(proj)
@@ -38,7 +46,19 @@
         Dim cD As Date = New Date.Now
         Dim uS As String = ASL_Tools.aslStore.DisplayName
         itemCopy.Subject = "(" & Format(cD, "yyyy-MM-dd:HHmmss") & " " & uS & ") " & itemCopy.Subject
+
+        'check to see if the user is in the office.
+        'if they are then save a copy of the email to the project folder
+        'if not then flag the message with the category offline
+        'offline messages can get copied to network at a later date.
+        If ASL_Tools.networkReady = True Then
+            'copy to network
+        Else
+            itemCopy.Categories = "Offline"
+        End If
+
         itemCopy.Move(fldSent)
+
 
         Me.Close()
     End Sub

@@ -6,8 +6,79 @@ Module ASL_Tools
     Public networkReady As Boolean = False
     Public aslStore As Outlook.Store
 
+    Public offlineFileCount As Integer = 0
+
     'global working project folder reference
     Public wProjFld As Outlook.Folder
+
+    Public Sub Get_OffLineFileCount()
+        ASL_Tools.offlineFileCount = 0
+
+        If IsNothing(ASL_Tools.aslStore) Then
+            ASL_Tools.Get_ASL_Store()
+        End If
+
+        If IsNothing(ASL_Tools.aslStore) Then
+            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
+            Exit Sub
+        End If
+
+        Dim fldRoot As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
+        Dim fldIn As Outlook.Folder = Nothing
+
+        For Each fld As Outlook.Folder In fldRoot.Folders
+            If fld.Name = "Inbox" Then
+                fldIn = fld
+                Exit For
+            End If
+        Next
+
+        ASL_Tools.EnumerateFolders(fldIn)
+
+
+    End Sub
+
+    Private Sub EnumerateFolders(ByVal oFolder As Outlook.Folder)
+        Dim folders As Outlook.Folders = Nothing
+        Dim Folder As Outlook.Folder = Nothing
+        Dim foldercount As Integer = Nothing
+
+        On Error Resume Next
+        folders = oFolder.Folders
+        foldercount = folders.Count
+        'Check if there are any folders below oFolder 
+        If foldercount Then
+            For Each Folder In folders
+                'Debug.Print(Folder.FolderPath)
+                For Each msIt As Outlook.MailItem In Folder.Items
+                    If Not (IsNothing(msIt.Categories)) Then
+                        Debug.Print(msIt.Categories)
+
+                        Dim cat As String = msIt.Categories.ToUpper
+                        If Not (cat.IndexOf("OFFLINE") = -1) Then
+                            ASL_Tools.offlineFileCount = ASL_Tools.offlineFileCount + 1
+                        End If
+                    End If
+                Next
+                EnumerateFolders(Folder)
+            Next
+        End If
+    End Sub
+
+    Public Sub Check_OfflineCategory()
+        Dim fndOC As Outlook.Category = Nothing
+
+        For Each oc As Outlook.Category In ASL_Tools.app.Session.Categories
+            If oc.Name = "OffLine" Then
+                fndOC = oc
+                Exit For
+            End If
+        Next
+
+        If IsNothing(fndOC) Then
+            ASL_Tools.app.Session.Categories.Add("OffLine", Outlook.OlCategoryColor.olCategoryColorDarkRed)
+        End If
+    End Sub
 
     Public Function Check_For_Network() As Boolean
         Dim retVal As Boolean = False

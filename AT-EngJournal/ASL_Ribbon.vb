@@ -5,6 +5,12 @@ Public Class ASL_Ribbon
 
     Private Sub ASL_Ribbon_Load(ByVal sender As System.Object, ByVal e As RibbonUIEventArgs) Handles MyBase.Load
         checkForNetwork()
+        Fill_Label_OffLineFileCount()
+    End Sub
+
+    Private Sub Fill_Label_OffLineFileCount()
+        ASL_Tools.Get_OffLineFileCount()
+        label_offlineFileCount.Label = "Offline File Count: " & ASL_Tools.offlineFileCount
     End Sub
 
     Private Sub button_checkForNetwork_Click(sender As Object, e As RibbonControlEventArgs)
@@ -132,5 +138,10 @@ Public Class ASL_Ribbon
         '   Set Get_Outlook_Folder = subFolder
         'End If
         'Wend
+    End Sub
+
+    Private Sub button_OfflineFilesCount_Click(sender As Object, e As RibbonControlEventArgs) Handles button_OfflineFilesCount.Click
+        Fill_Label_OffLineFileCount()
+
     End Sub
 End Class

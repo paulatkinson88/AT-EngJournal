@@ -48,9 +48,16 @@
         Me.Group2 = Me.Factory.CreateRibbonGroup
         Me.Button2 = Me.Factory.CreateRibbonButton
         Me.Button3 = Me.Factory.CreateRibbonButton
+        Me.Group3 = Me.Factory.CreateRibbonGroup
+        Me.label_offlineFileCount = Me.Factory.CreateRibbonLabel
+        Me.ButtonGroup1 = Me.Factory.CreateRibbonButtonGroup
+        Me.button_OfflineFilesCount = Me.Factory.CreateRibbonButton
+        Me.Button4 = Me.Factory.CreateRibbonButton
         Me.Tab1.SuspendLayout()
         Me.Group1.SuspendLayout()
         Me.Group2.SuspendLayout()
+        Me.Group3.SuspendLayout()
+        Me.ButtonGroup1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Tab1
@@ -58,6 +65,7 @@
         Me.Tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office
         Me.Tab1.Groups.Add(Me.Group1)
         Me.Tab1.Groups.Add(Me.Group2)
+        Me.Tab1.Groups.Add(Me.Group3)
         Me.Tab1.Label = "ASL"
         Me.Tab1.Name = "Tab1"
         '
@@ -97,6 +105,38 @@
         Me.Button3.Label = "Button3"
         Me.Button3.Name = "Button3"
         '
+        'Group3
+        '
+        Me.Group3.Items.Add(Me.label_offlineFileCount)
+        Me.Group3.Items.Add(Me.ButtonGroup1)
+        Me.Group3.Items.Add(Me.Button4)
+        Me.Group3.Label = "Offline Files"
+        Me.Group3.Name = "Group3"
+        '
+        'label_offlineFileCount
+        '
+        Me.label_offlineFileCount.Label = "Offline File Count: -"
+        Me.label_offlineFileCount.Name = "label_offlineFileCount"
+        '
+        'ButtonGroup1
+        '
+        Me.ButtonGroup1.Items.Add(Me.button_OfflineFilesCount)
+        Me.ButtonGroup1.Name = "ButtonGroup1"
+        '
+        'button_OfflineFilesCount
+        '
+        Me.button_OfflineFilesCount.Image = Global.AT_EngJournal.My.Resources.Resources.face_wink_4
+        Me.button_OfflineFilesCount.Label = "Refresh"
+        Me.button_OfflineFilesCount.Name = "button_OfflineFilesCount"
+        Me.button_OfflineFilesCount.ShowImage = True
+        '
+        'Button4
+        '
+        Me.Button4.Image = Global.AT_EngJournal.My.Resources.Resources.face_glasses
+        Me.Button4.Label = "Push Offline Files to Server"
+        Me.Button4.Name = "Button4"
+        Me.Button4.ShowImage = True
+        '
         'ASL_Ribbon
         '
         Me.Name = "ASL_Ribbon"
@@ -110,6 +150,10 @@
         Me.Group1.PerformLayout()
         Me.Group2.ResumeLayout(False)
         Me.Group2.PerformLayout()
+        Me.Group3.ResumeLayout(False)
+        Me.Group3.PerformLayout()
+        Me.ButtonGroup1.ResumeLayout(False)
+        Me.ButtonGroup1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -121,6 +165,11 @@
     Friend WithEvents Group2 As Microsoft.Office.Tools.Ribbon.RibbonGroup
     Friend WithEvents Button2 As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents Button3 As Microsoft.Office.Tools.Ribbon.RibbonButton
+    Friend WithEvents Group3 As Microsoft.Office.Tools.Ribbon.RibbonGroup
+    Friend WithEvents label_offlineFileCount As Microsoft.Office.Tools.Ribbon.RibbonLabel
+    Friend WithEvents ButtonGroup1 As Microsoft.Office.Tools.Ribbon.RibbonButtonGroup
+    Friend WithEvents Button4 As Microsoft.Office.Tools.Ribbon.RibbonButton
+    Friend WithEvents button_OfflineFilesCount As Microsoft.Office.Tools.Ribbon.RibbonButton
 End Class
 
 Partial Class ThisRibbonCollection
