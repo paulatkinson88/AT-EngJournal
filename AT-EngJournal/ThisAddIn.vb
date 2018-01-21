@@ -2,6 +2,7 @@
 
     Private Sub ThisAddIn_Startup() Handles Me.Startup
         ASL_Tools.app = Me.Application
+
         Check_OfflineCategory()
     End Sub
 

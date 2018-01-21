@@ -1,16 +1,22 @@
 ﻿Imports System.Diagnostics
 Imports Microsoft.Office.Tools.Ribbon
+Imports System.Reflection
 
 Public Class ASL_Ribbon
 
     Private Sub ASL_Ribbon_Load(ByVal sender As System.Object, ByVal e As RibbonUIEventArgs) Handles MyBase.Load
         checkForNetwork()
+
+        Dim bob = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+
+        label_version.Label = bob.ToString
+        'ApplicationDeployment.CurrentDeployment.CurrentVersion
         Fill_Label_OffLineFileCount()
     End Sub
 
     Private Sub Fill_Label_OffLineFileCount()
         ASL_Tools.Get_OffLineFileCount()
-        label_offlineFileCount.Label = "Offline File Count: " & ASL_Tools.offlineFileCount
+        label_offlinefilecount.Label = ASL_Tools.offlineFileCount
     End Sub
 
     Private Sub button_checkForNetwork_Click(sender As Object, e As RibbonControlEventArgs)
@@ -19,9 +25,9 @@ Public Class ASL_Ribbon
 
     Public Sub checkForNetwork()
         If ASL_Tools.Check_For_Network Then
-            label_connection.Label = "Ready: True"
+            label_connection.Label = "True"
         Else
-            label_connection.Label = "Ready: False"
+            label_connection.Label = "False"
         End If
     End Sub
 
@@ -142,6 +148,14 @@ Public Class ASL_Ribbon
 
     Private Sub button_OfflineFilesCount_Click(sender As Object, e As RibbonControlEventArgs) Handles button_OfflineFilesCount.Click
         Fill_Label_OffLineFileCount()
+
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As RibbonControlEventArgs) Handles Button4.Click
+        'for each file that is offline. push them to the server.
+        For Each mo As Outlook.MailItem In ASL_Tools.msList
+            MsgBox(mo.Parent.ToString)
+        Next
 
     End Sub
 End Class

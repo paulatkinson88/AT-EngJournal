@@ -3,6 +3,7 @@
 Module ASL_Tools
     Public app As Outlook.Application
 
+    Public dirObj As String = "K:\"
     Public networkReady As Boolean = False
     Public aslStore As Outlook.Store
 
@@ -11,8 +12,12 @@ Module ASL_Tools
     'global working project folder reference
     Public wProjFld As Outlook.Folder
 
+    Public msList As List(Of Outlook.MailItem)
+
     Public Sub Get_OffLineFileCount()
         ASL_Tools.offlineFileCount = 0
+
+        ASL_Tools.msList = New List(Of Outlook.MailItem)
 
         If IsNothing(ASL_Tools.aslStore) Then
             ASL_Tools.Get_ASL_Store()
@@ -52,11 +57,13 @@ Module ASL_Tools
                 'Debug.Print(Folder.FolderPath)
                 For Each msIt As Outlook.MailItem In Folder.Items
                     If Not (IsNothing(msIt.Categories)) Then
-                        Debug.Print(msIt.Categories)
+                        'Debug.Print(msIt.Categories)
 
                         Dim cat As String = msIt.Categories.ToUpper
                         If Not (cat.IndexOf("OFFLINE") = -1) Then
+
                             ASL_Tools.offlineFileCount = ASL_Tools.offlineFileCount + 1
+                            ASL_Tools.msList.Add(msIt)
                         End If
                     End If
                 Next
@@ -90,15 +97,20 @@ Module ASL_Tools
 
 
         For Each dr In System.IO.DriveInfo.GetDrives()
-            If dr.Name = "J:\" And dr.DriveType.ToString = "Network" And dr.IsReady = True Then
+            'If dr.Name = "J:\" And dr.DriveType.ToString = "Network" And dr.IsReady = True Then
+            If dr.Name = ASL_Tools.dirObj And dr.DriveType.ToString = "Network" And dr.IsReady = True Then
                 'there is a j drive that is networked.
                 'check to see that the information in the drive is consistent with ASL J drive info.
-                For Each dirObj In System.IO.Directory.GetDirectories(dr.Name)
+                For Each dio In System.IO.Directory.GetDirectories(dr.Name)
                     'Debug.Print(dirObj)
-                    Select Case dirObj.ToUpper
+                    Select Case dio.ToUpper
                         Case "J:\18XX"
                             fnd1 = True
                         Case "J:\19XX"
+                            fnd2 = True
+                        Case "K:\18XX"
+                            fnd1 = True
+                        Case "K:\19XX"
                             fnd2 = True
                     End Select
                 Next
@@ -115,17 +127,28 @@ Module ASL_Tools
         Return retVal
     End Function
 
-    Public Function Check_For_Project_Directory(pro As String) As Boolean
-        Dim retVal As Boolean = False
+    Public Function Check_For_ProjectDirectoryEngJournal(pro As String) As System.IO.DirectoryInfo
+        Dim retVal As System.IO.DirectoryInfo = Nothing
+        Dim di As System.IO.DirectoryInfo = Nothing
 
-        Dim projDirectory As String = "J:\" & pro.Substring(0, 2) & "XX\" & pro
+        Dim projDirectory As String = dirObj & pro.Substring(0, 2) & "XX\" & pro
         'if the project directory exists then move to next check
         If System.IO.Directory.Exists(projDirectory) Then
             If Not (System.IO.Directory.Exists(projDirectory & "\EngJournal")) Then
                 'check to see if the engineering journal exists.
                 'if it does not exist then create it.
-
+                di = New System.IO.DirectoryInfo(projDirectory)
+                di = di.CreateSubdirectory("EngJournal")
+            Else
+                di = New System.IO.DirectoryInfo(projDirectory & "\EngJournal")
             End If
+            'add the message file.
+
+            retVal = di
+
+        Else
+            'project directory missing
+            MsgBox("Project Directory does not exist", vbCritical, "Error")
         End If
 
         Return retVal
@@ -298,4 +321,11 @@ Module ASL_Tools
         Return fld
     End Function
 
+    Public Function get_ProjectNumber_From_MsgFolder(ms As Outlook.MailItem) As String
+        Dim retVal As String = ""
+
+        'ms.
+
+        Return retVal
+    End Function
 End Module

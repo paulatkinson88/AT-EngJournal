@@ -43,9 +43,9 @@ Public Class form_EmailSend
 
         'if the project exists then store the message information to the server
         Dim itemCopy As Outlook.MailItem = Item.Copy
-        Dim cD As Date = New Date.Now
+        Dim cD As Date = Date.Now
         Dim uS As String = ASL_Tools.aslStore.DisplayName
-        itemCopy.Subject = "(" & Format(cD, "yyyy-MM-dd:HHmmss") & " " & uS & ") " & itemCopy.Subject
+        itemCopy.Subject = "(" & Format(cD, "yyyy-MM-dd-HHmmss") & ") " & itemCopy.Subject
 
         'check to see if the user is in the office.
         'if they are then save a copy of the email to the project folder
@@ -53,12 +53,17 @@ Public Class form_EmailSend
         'offline messages can get copied to network at a later date.
         If ASL_Tools.networkReady = True Then
             'copy to network
+            Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(proj)
+            If IsNothing(di) Then
+                itemCopy.Categories = "Offline"
+            Else
+                itemCopy.SaveAs(di.FullName & "\" & itemCopy.Subject & ".msg")
+            End If
         Else
             itemCopy.Categories = "Offline"
         End If
 
         itemCopy.Move(fldSent)
-
 
         Me.Close()
     End Sub
