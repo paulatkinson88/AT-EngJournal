@@ -151,11 +151,15 @@ Public Class ASL_Ribbon
 
     End Sub
 
-    Private Sub Button4_Click(sender As Object, e As RibbonControlEventArgs) Handles Button4.Click
+    Private Sub Button4_Click(sender As Object, e As RibbonControlEventArgs) Handles button_pushOfflineFilestoServer.Click
         'for each file that is offline. push them to the server.
         For Each mo As Outlook.MailItem In ASL_Tools.msList
             MsgBox(mo.Parent.ToString)
         Next
 
+    End Sub
+
+    Private Sub button_recordEmail_Click(sender As Object, e As RibbonControlEventArgs) Handles button_recordEmail.Click
+        Globals.ThisAddIn.Application_ItemRecord()
     End Sub
 End Class

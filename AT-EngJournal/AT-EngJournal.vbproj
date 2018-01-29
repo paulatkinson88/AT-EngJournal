@@ -213,6 +213,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ASL_Tools.vb" />
+    <Compile Include="form_EmailRecord.Designer.vb">
+      <DependentUpon>form_EmailRecord.vb</DependentUpon>
+    </Compile>
+    <Compile Include="form_EmailRecord.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="form_EmailSend.Designer.vb">
       <DependentUpon>form_EmailSend.vb</DependentUpon>
     </Compile>
@@ -231,6 +237,9 @@
     <Compile Include="My Project\AssemblyInfo.vb" />
     <EmbeddedResource Include="ASL_Ribbon.resx">
       <DependentUpon>ASL_Ribbon.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form_EmailRecord.resx">
+      <DependentUpon>form_EmailRecord.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="form_EmailSend.resx">
       <DependentUpon>form_EmailSend.vb</DependentUpon>
@@ -268,6 +277,21 @@
   <ItemGroup>
     <None Include="Resources\face-glasses.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view-refresh-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document-save-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mail-receive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\transform-shear-right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dialog-close-2.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -300,7 +324,7 @@
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Outlook" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Outlook" Language="vb" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Outlook\InstallRoot\Path#outlook.exe" AddItemTemplatesGuid="{5D898164-AEB5-470F-97BA-9253F022FD71}" />
         <Host Name="Outlook" PublishedHash="69C324AB27932AA2FBF2B7EA72250886FF164DE6" IconIndex="0">
-          <HostItem Name="ThisAddIn" Code="ThisAddIn.vb" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.vb" PublishedHash="341B421006973DA6ECFF9E7771C273C5532C588D" />
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.vb" CanonicalName="AddIn" PublishedHash="341B421006973DA6ECFF9E7771C273C5532C588D" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.vb" />
         </Host>
       </FlavorProperties>
     </VisualStudio>

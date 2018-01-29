@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class form_EmailSend
+Partial Class form_EmailRecord
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -41,10 +41,10 @@ Partial Class form_EmailSend
         Me.Panel1.Controls.Add(Me.TextBox1)
         Me.Panel1.Controls.Add(Me.button_record)
         Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Location = New System.Drawing.Point(12, 12)
+        Me.Panel1.Location = New System.Drawing.Point(8, 10)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(469, 89)
-        Me.Panel1.TabIndex = 6
+        Me.Panel1.TabIndex = 8
         '
         'Label1
         '
@@ -85,12 +85,12 @@ Partial Class form_EmailSend
         'button_skip
         '
         Me.button_skip.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.button_skip.Image = Global.AT_EngJournal.My.Resources.Resources.transform_shear_right
-        Me.button_skip.Location = New System.Drawing.Point(363, 120)
+        Me.button_skip.Image = Global.AT_EngJournal.My.Resources.Resources.dialog_close_2
+        Me.button_skip.Location = New System.Drawing.Point(359, 118)
         Me.button_skip.Name = "button_skip"
         Me.button_skip.Size = New System.Drawing.Size(104, 42)
-        Me.button_skip.TabIndex = 7
-        Me.button_skip.Text = "Skip"
+        Me.button_skip.TabIndex = 9
+        Me.button_skip.Text = "Cancel"
         Me.button_skip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.button_skip.UseVisualStyleBackColor = True
         '
@@ -103,7 +103,7 @@ Partial Class form_EmailSend
         Me.PictureBox1.TabIndex = 4
         Me.PictureBox1.TabStop = False
         '
-        'form_EmailSend
+        'form_EmailRecord
         '
         Me.AcceptButton = Me.button_record
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -116,7 +116,7 @@ Partial Class form_EmailSend
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "form_EmailSend"
+        Me.Name = "form_EmailRecord"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -128,11 +128,11 @@ Partial Class form_EmailSend
 
     End Sub
 
+    Friend WithEvents button_skip As Windows.Forms.Button
     Friend WithEvents Panel1 As Windows.Forms.Panel
     Friend WithEvents PictureBox1 As Windows.Forms.PictureBox
     Friend WithEvents Label1 As Windows.Forms.Label
     Friend WithEvents TextBox1 As Windows.Forms.TextBox
     Friend WithEvents button_record As Windows.Forms.Button
     Friend WithEvents Label2 As Windows.Forms.Label
-    Friend WithEvents button_skip As Windows.Forms.Button
 End Class

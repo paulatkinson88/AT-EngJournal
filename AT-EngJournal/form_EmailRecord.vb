@@ -1,8 +1,9 @@
-﻿Imports System.Diagnostics
+﻿Public Class form_EmailRecord
+    Public emList As List(Of Outlook.MailItem) = New List(Of Outlook.MailItem)
 
-Public Class form_EmailSend
-
-    Public Item As Outlook.MailItem
+    Private Sub button_skip_Click(sender As Object, e As EventArgs) Handles button_skip.Click
+        Me.Close()
+    End Sub
 
     Private Sub button_record_Click(sender As Object, e As EventArgs) Handles button_record.Click
         'begin the structure for the send function
@@ -29,41 +30,32 @@ Public Class form_EmailSend
             End If
         End If
 
-        'with the project folder
-        'get the sent folder
-        Dim fldSent As Outlook.Folder = ASL_Tools.Get_ProjectFolderSent(fld)
-
-        If IsNothing(fldSent) Then
-            fldSent = ASL_Tools.Create_ProjectFolderSent(fld)
-            If IsNothing(fldSent) Then
-                MsgBox("Error creating sent folder", vbCritical, "Error")
-                Exit Sub
-            End If
-        End If
-
         'if the project exists then store the message information to the server
-        Dim itemCopy As Outlook.MailItem = Item.Copy
-        Dim cD As Date = Date.Now
-        Dim uS As String = ASL_Tools.aslStore.DisplayName
-        itemCopy.Subject = "(" & Format(cD, "yyyy-MM-dd-HHmmss") & ")(se) " & itemCopy.Subject
+        'for each message move it to the project folder and create a copy on the server.
 
-        'check to see if the user is in the office.
-        'if they are then save a copy of the email to the project folder
-        'if not then flag the message with the category offline
-        'offline messages can get copied to network at a later date.
-        If ASL_Tools.networkReady = True Then
-            'copy to network
-            Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(proj)
-            If IsNothing(di) Then
-                itemCopy.Categories = "Offline"
+        For Each itm As Outlook.MailItem In emList
+            Dim cD As Date = Date.Now
+            Dim uS As String = ASL_Tools.aslStore.DisplayName
+            itm.Subject = "(" & Format(cD, "yyyy-MM-dd-HHmmss") & ")(re) " & itm.Subject
+
+            'check to see if the user is in the office.
+            'if they are then save a copy of the email to the project folder
+            'if not then flag the message with the category offline
+            'offline messages can get copied to network at a later date.
+            If ASL_Tools.networkReady = True Then
+                'copy to network
+                Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(proj)
+                If IsNothing(di) Then
+                    itm.Categories = "Offline"
+                Else
+                    itm.SaveAs(di.FullName & "\" & itm.Subject & ".msg")
+                End If
             Else
-                itemCopy.SaveAs(di.FullName & "\" & itemCopy.Subject & ".msg")
+                itm.Categories = "Offline"
             End If
-        Else
-            itemCopy.Categories = "Offline"
-        End If
 
-        itemCopy.Move(fldSent)
+            itm.Move(fld)
+        Next
 
         Me.Close()
     End Sub
@@ -77,11 +69,7 @@ Public Class form_EmailSend
         End If
     End Sub
 
-    Private Sub button_skip_Click(sender As Object, e As EventArgs) Handles button_skip.Click
-        Me.Close()
-    End Sub
-
-    Private Sub Panel1_Paint(sender As Object, e As Windows.Forms.PaintEventArgs) Handles Panel1.Paint
+    Private Sub form_EmailRecord_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
     End Sub
 End Class

@@ -22,6 +22,16 @@ AT-EngJournal
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:AT_EngJournal.My.Resources.Resources.dialog_close_2">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.document_save_3">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:AT_EngJournal.My.Resources.Resources.face_glasses">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -37,7 +47,22 @@ AT-EngJournal
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:AT_EngJournal.My.Resources.Resources.mail_receive">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:AT_EngJournal.My.Resources.Resources.network_connect_3">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.transform_shear_right">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.view_refresh_4">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>

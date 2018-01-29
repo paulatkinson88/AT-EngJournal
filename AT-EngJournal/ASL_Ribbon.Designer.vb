@@ -51,6 +51,7 @@
         Me.label = Me.Factory.CreateRibbonLabel
         Me.Label2 = Me.Factory.CreateRibbonLabel
         Me.label_offlinefilecount = Me.Factory.CreateRibbonLabel
+        Me.Group5 = Me.Factory.CreateRibbonGroup
         Me.Group2 = Me.Factory.CreateRibbonGroup
         Me.Group4 = Me.Factory.CreateRibbonGroup
         Me.Box3 = Me.Factory.CreateRibbonBox
@@ -58,15 +59,16 @@
         Me.label_version = Me.Factory.CreateRibbonLabel
         Me.Button1 = Me.Factory.CreateRibbonButton
         Me.button_OfflineFilesCount = Me.Factory.CreateRibbonButton
-        Me.Button4 = Me.Factory.CreateRibbonButton
+        Me.button_pushOfflineFilestoServer = Me.Factory.CreateRibbonButton
+        Me.button_recordEmail = Me.Factory.CreateRibbonButton
         Me.Button2 = Me.Factory.CreateRibbonButton
         Me.Button3 = Me.Factory.CreateRibbonButton
-        Me.Button5 = Me.Factory.CreateRibbonButton
         Me.Tab1.SuspendLayout()
         Me.Group1.SuspendLayout()
         Me.Box1.SuspendLayout()
         Me.Group3.SuspendLayout()
         Me.Box2.SuspendLayout()
+        Me.Group5.SuspendLayout()
         Me.Group2.SuspendLayout()
         Me.Group4.SuspendLayout()
         Me.Box3.SuspendLayout()
@@ -77,6 +79,7 @@
         Me.Tab1.ControlId.ControlIdType = Microsoft.Office.Tools.Ribbon.RibbonControlIdType.Office
         Me.Tab1.Groups.Add(Me.Group1)
         Me.Tab1.Groups.Add(Me.Group3)
+        Me.Tab1.Groups.Add(Me.Group5)
         Me.Tab1.Groups.Add(Me.Group2)
         Me.Tab1.Groups.Add(Me.Group4)
         Me.Tab1.Label = "ASL"
@@ -109,7 +112,7 @@
         'Group3
         '
         Me.Group3.Items.Add(Me.button_OfflineFilesCount)
-        Me.Group3.Items.Add(Me.Button4)
+        Me.Group3.Items.Add(Me.button_pushOfflineFilestoServer)
         Me.Group3.Items.Add(Me.Box2)
         Me.Group3.Label = "Offline Files"
         Me.Group3.Name = "Group3"
@@ -137,12 +140,19 @@
         Me.label_offlinefilecount.Label = "0"
         Me.label_offlinefilecount.Name = "label_offlinefilecount"
         '
+        'Group5
+        '
+        Me.Group5.Items.Add(Me.button_recordEmail)
+        Me.Group5.Label = "Record"
+        Me.Group5.Name = "Group5"
+        '
         'Group2
         '
         Me.Group2.Items.Add(Me.Button2)
         Me.Group2.Items.Add(Me.Button3)
         Me.Group2.Label = "Test"
         Me.Group2.Name = "Group2"
+        Me.Group2.Visible = False
         '
         'Group4
         '
@@ -178,18 +188,26 @@
         'button_OfflineFilesCount
         '
         Me.button_OfflineFilesCount.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.button_OfflineFilesCount.Image = Global.AT_EngJournal.My.Resources.Resources.face_wink_4
-        Me.button_OfflineFilesCount.Label = "Refresh"
+        Me.button_OfflineFilesCount.Image = Global.AT_EngJournal.My.Resources.Resources.view_refresh_4
+        Me.button_OfflineFilesCount.Label = "ReScan"
         Me.button_OfflineFilesCount.Name = "button_OfflineFilesCount"
         Me.button_OfflineFilesCount.ShowImage = True
         '
-        'Button4
+        'button_pushOfflineFilestoServer
         '
-        Me.Button4.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.Button4.Image = Global.AT_EngJournal.My.Resources.Resources.face_glasses
-        Me.Button4.Label = "Push Offline Files to Server"
-        Me.Button4.Name = "Button4"
-        Me.Button4.ShowImage = True
+        Me.button_pushOfflineFilestoServer.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_pushOfflineFilestoServer.Image = Global.AT_EngJournal.My.Resources.Resources.document_save_3
+        Me.button_pushOfflineFilestoServer.Label = "Push Offline Files to Server"
+        Me.button_pushOfflineFilestoServer.Name = "button_pushOfflineFilestoServer"
+        Me.button_pushOfflineFilestoServer.ShowImage = True
+        '
+        'button_recordEmail
+        '
+        Me.button_recordEmail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_recordEmail.Image = Global.AT_EngJournal.My.Resources.Resources.mail_receive
+        Me.button_recordEmail.Label = "Record Email"
+        Me.button_recordEmail.Name = "button_recordEmail"
+        Me.button_recordEmail.ShowImage = True
         '
         'Button2
         '
@@ -201,19 +219,9 @@
         Me.Button3.Label = "Button3"
         Me.Button3.Name = "Button3"
         '
-        'Button5
-        '
-        Me.Button5.Label = "Button5"
-        Me.Button5.Name = "Button5"
-        Me.Button5.ShowImage = True
-        '
         'ASL_Ribbon
         '
         Me.Name = "ASL_Ribbon"
-        '
-        'ASL_Ribbon.OfficeMenu
-        '
-        Me.OfficeMenu.Items.Add(Me.Button5)
         Me.RibbonType = "Microsoft.Outlook.Explorer, Microsoft.Outlook.Mail.Compose, Microsoft.Outlook.Mai" &
     "l.Read, Microsoft.Outlook.Post.Compose, Microsoft.Outlook.Post.Read, Microsoft.O" &
     "utlook.Resend"
@@ -228,6 +236,8 @@
         Me.Group3.PerformLayout()
         Me.Box2.ResumeLayout(False)
         Me.Box2.PerformLayout()
+        Me.Group5.ResumeLayout(False)
+        Me.Group5.PerformLayout()
         Me.Group2.ResumeLayout(False)
         Me.Group2.PerformLayout()
         Me.Group4.ResumeLayout(False)
@@ -245,7 +255,7 @@
     Friend WithEvents Button2 As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents Button3 As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents Group3 As Microsoft.Office.Tools.Ribbon.RibbonGroup
-    Friend WithEvents Button4 As Microsoft.Office.Tools.Ribbon.RibbonButton
+    Friend WithEvents button_pushOfflineFilestoServer As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents button_OfflineFilesCount As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents Group4 As Microsoft.Office.Tools.Ribbon.RibbonGroup
     Friend WithEvents Label1 As Microsoft.Office.Tools.Ribbon.RibbonLabel
@@ -258,7 +268,8 @@
     Friend WithEvents label_offlinefilecount As Microsoft.Office.Tools.Ribbon.RibbonLabel
     Friend WithEvents Box3 As Microsoft.Office.Tools.Ribbon.RibbonBox
     Friend WithEvents label_version As Microsoft.Office.Tools.Ribbon.RibbonLabel
-    Friend WithEvents Button5 As Microsoft.Office.Tools.Ribbon.RibbonButton
+    Friend WithEvents Group5 As Microsoft.Office.Tools.Ribbon.RibbonGroup
+    Friend WithEvents button_recordEmail As Microsoft.Office.Tools.Ribbon.RibbonButton
 End Class
 
 Partial Class ThisRibbonCollection
