@@ -23,12 +23,12 @@ Partial Class form_EmailSend
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.button_record = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.button_skip = New System.Windows.Forms.Button()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -41,10 +41,19 @@ Partial Class form_EmailSend
         Me.Panel1.Controls.Add(Me.TextBox1)
         Me.Panel1.Controls.Add(Me.button_record)
         Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Location = New System.Drawing.Point(12, 12)
+        Me.Panel1.Location = New System.Drawing.Point(8, 10)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(469, 89)
         Me.Panel1.TabIndex = 6
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Image = Global.AT_EngJournal.My.Resources.Resources.face_laugh_2
+        Me.PictureBox1.Location = New System.Drawing.Point(56, 46)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(39, 30)
+        Me.PictureBox1.TabIndex = 4
+        Me.PictureBox1.TabStop = False
         '
         'Label1
         '
@@ -62,15 +71,6 @@ Partial Class form_EmailSend
         Me.TextBox1.Size = New System.Drawing.Size(62, 20)
         Me.TextBox1.TabIndex = 1
         '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(101, 55)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(83, 13)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Project Number:"
-        '
         'button_record
         '
         Me.button_record.Image = Global.AT_EngJournal.My.Resources.Resources.mail_receive
@@ -82,11 +82,20 @@ Partial Class form_EmailSend
         Me.button_record.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.button_record.UseVisualStyleBackColor = True
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(101, 55)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(83, 13)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "Project Number:"
+        '
         'button_skip
         '
         Me.button_skip.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.button_skip.Image = Global.AT_EngJournal.My.Resources.Resources.transform_shear_right
-        Me.button_skip.Location = New System.Drawing.Point(363, 120)
+        Me.button_skip.Location = New System.Drawing.Point(370, 105)
         Me.button_skip.Name = "button_skip"
         Me.button_skip.Size = New System.Drawing.Size(104, 42)
         Me.button_skip.TabIndex = 7
@@ -94,22 +103,13 @@ Partial Class form_EmailSend
         Me.button_skip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.button_skip.UseVisualStyleBackColor = True
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.Image = Global.AT_EngJournal.My.Resources.Resources.face_laugh_2
-        Me.PictureBox1.Location = New System.Drawing.Point(56, 46)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(39, 30)
-        Me.PictureBox1.TabIndex = 4
-        Me.PictureBox1.TabStop = False
-        '
         'form_EmailSend
         '
         Me.AcceptButton = Me.button_record
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.button_skip
-        Me.ClientSize = New System.Drawing.Size(485, 170)
+        Me.ClientSize = New System.Drawing.Size(486, 155)
         Me.ControlBox = False
         Me.Controls.Add(Me.button_skip)
         Me.Controls.Add(Me.Panel1)

@@ -14,6 +14,8 @@ Module ASL_Tools
 
     Public msList As List(Of Outlook.MailItem)
 
+    Public offLineFileForm As form_ViewOfflineFiles = New form_ViewOfflineFiles
+
     Public Sub Get_OffLineFileCount()
         ASL_Tools.offlineFileCount = 0
 
@@ -328,4 +330,65 @@ Module ASL_Tools
 
         Return retVal
     End Function
+
+    Public Sub Set_StampProperty(maIt As Outlook.MailItem, st As String)
+        Dim fnd As Boolean = False
+
+        For Each upro As Outlook.UserProperty In maIt.UserProperties
+            If upro.Name = "messageKeyTag" Then
+                fnd = True
+                Exit For
+            End If
+        Next
+
+        If fnd = False Then
+            maIt.UserProperties.Add("messageKeyTag", Outlook.OlUserPropertyType.olText, False, Outlook.OlFormatText.olFormatTextText)
+        End If
+
+        maIt.UserProperties.Item("messageKeyTag").Value = st
+
+    End Sub
+
+    Public Function Get_StampProperty(maIt As Outlook.MailItem) As String
+        Dim retVal As String = ""
+
+        For Each upro As Outlook.UserProperty In maIt.UserProperties
+            If upro.Name = "messageKeyTag" Then
+                retVal = upro.Value
+                Exit For
+            End If
+        Next
+
+        Return retVal
+    End Function
+
+    Public Function Get_StampProperty_MessageProperties(maIt As Outlook.MailItem) As ASLmessageProperties
+        Dim retVal As ASLmessageProperties = New ASLmessageProperties
+        Dim keyVal As String = ""
+
+        For Each upro As Outlook.UserProperty In maIt.UserProperties
+            If upro.Name = "messageKeyTag" Then
+                keyVal = upro.Value
+                Exit For
+            End If
+        Next
+
+        If Not (keyVal = "") Then
+            Dim ar = keyVal.Split(New Char() {"("c})
+            If ar.Length = 4 Then
+                retVal.proj = ar(1).Substring(0, ar(1).Length - 1)
+                retVal.timestamp = ar(2).Substring(0, ar(2).Length - 1)
+                retVal.messagetype = ar(3).Substring(0, ar(3).Length - 1)
+            End If
+        End If
+
+        Return retVal
+    End Function
+
 End Module
+
+Public Class ASLmessageProperties
+    Public proj As String
+    Public timestamp As String
+    Public messagetype As String
+End Class

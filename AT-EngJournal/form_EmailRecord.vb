@@ -17,7 +17,7 @@
         'ask the user if they wish to create it or re enter a new
         'project number
         If IsNothing(fld) Then
-            Dim rsp = MsgBox("Project folder not found." & vbLf & "Yes to Create Project folder" & vbLf & "No to Re-Enter Project Number", vbYesNo + vbCritical, "Error")
+            Dim rsp = MsgBox("Project folder not found in your email inbox." & vbLf & "Yes to Create Project folder" & vbLf & "No to Re-Enter Project Number", vbYesNo + vbCritical, "Error")
             If rsp = vbNo Then
                 Exit Sub
             End If
@@ -34,9 +34,12 @@
         'for each message move it to the project folder and create a copy on the server.
 
         For Each itm As Outlook.MailItem In emList
-            Dim cD As Date = Date.Now
             Dim uS As String = ASL_Tools.aslStore.DisplayName
-            itm.Subject = "(" & Format(cD, "yyyy-MM-dd-HHmmss") & ")(re) " & itm.Subject
+
+            Dim cD As Date = itm.ReceivedTime
+            Dim st As String = "(" & proj & ")(" & Format(cD, "yyyy-MM-dd-HHmmss") & ")(re)"
+            'get the email recieved date store this messageKeyValue in a user property in the message
+            ASL_Tools.Set_StampProperty(itm, st)
 
             'check to see if the user is in the office.
             'if they are then save a copy of the email to the project folder
@@ -48,7 +51,9 @@
                 If IsNothing(di) Then
                     itm.Categories = "Offline"
                 Else
-                    itm.SaveAs(di.FullName & "\" & itm.Subject & ".msg")
+                    'use the messageKeyValue as the message name when saving to the 
+                    'network
+                    itm.SaveAs(di.FullName & "\" & st & ".msg")
                 End If
             Else
                 itm.Categories = "Offline"

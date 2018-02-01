@@ -59,11 +59,4 @@ Public Class ThisAddIn
 
     End Sub
 
-    Private Sub Explorer_SelectFolder()
-
-    End Sub
-
-    Private Sub Application_Startup() Handles Application.Startup
-
-    End Sub
 End Class

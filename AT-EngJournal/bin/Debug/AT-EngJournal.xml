@@ -32,6 +32,11 @@ AT-EngJournal
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:AT_EngJournal.My.Resources.Resources.edit_find_project">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:AT_EngJournal.My.Resources.Resources.face_glasses">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -43,6 +48,11 @@ AT-EngJournal
 </summary>
 </member>
 <member name="P:AT_EngJournal.My.Resources.Resources.face_wink_4">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
+<member name="P:AT_EngJournal.My.Resources.Resources.mail_forward_5">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>

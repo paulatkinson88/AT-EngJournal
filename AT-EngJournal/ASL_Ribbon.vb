@@ -154,12 +154,72 @@ Public Class ASL_Ribbon
     Private Sub Button4_Click(sender As Object, e As RibbonControlEventArgs) Handles button_pushOfflineFilestoServer.Click
         'for each file that is offline. push them to the server.
         For Each mo As Outlook.MailItem In ASL_Tools.msList
-            MsgBox(mo.Parent.ToString)
+            Dim msgProperties As ASLmessageProperties = ASL_Tools.Get_StampProperty_MessageProperties(mo)
+
+            If msgProperties.messagetype = "re" Or msgProperties.messagetype = "se" Then
+                If ASL_Tools.networkReady = True Then
+                    'copy to network
+                    Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(msgProperties.proj)
+                    If Not (IsNothing(di)) Then
+                        'use the messageKeyValue as the message name when saving to the 
+                        'network
+                        mo.SaveAs(di.FullName & "\(" & msgProperties.proj & ")(" & msgProperties.timestamp & ")(" & msgProperties.messagetype & ")" & ".msg")
+                        mo.Categories = ""
+                    End If
+                End If
+            Else
+                MsgBox("Message is damaged and cannot be stored on Network." & vbLf & mo.Subject, vbCritical, "Error")
+            End If
         Next
 
+        Fill_Label_OffLineFileCount()
     End Sub
 
     Private Sub button_recordEmail_Click(sender As Object, e As RibbonControlEventArgs) Handles button_recordEmail.Click
         Globals.ThisAddIn.Application_ItemRecord()
+    End Sub
+
+    Private Sub Button4_Click_1(sender As Object, e As RibbonControlEventArgs) Handles button_viewOfflineFiles.Click
+        If IsNothing(ASL_Tools.offLineFileForm) Then
+            ASL_Tools.offLineFileForm = New form_ViewOfflineFiles
+            ASL_Tools.offLineFileForm.Show()
+        Else
+            ASL_Tools.offLineFileForm.Show()
+        End If
+        ASL_Tools.offLineFileForm.Focus()
+
+    End Sub
+
+    Private Sub button_MoveEmail_Click(sender As Object, e As RibbonControlEventArgs) Handles button_MoveEmail.Click
+
+
+    End Sub
+
+    Private Sub button_getUserProperties_Click(sender As Object, e As RibbonControlEventArgs) Handles button_getUserProperties.Click
+        If Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count = 0 Then Exit Sub
+
+        Debug.Print(Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count.ToString)
+        'get the first selected item.
+        'if the store the item resides in is in the domain name asltd.com continue
+
+        Dim em As Outlook.MailItem = Globals.ThisAddIn.Application.ActiveExplorer.Selection.Item(1)
+
+        Dim senderDomain As String = ASL_Tools.Get_Domain_From_Address(em.Parent.store.displayname.ToString)
+
+        If senderDomain = "asltd.com" Then
+            Dim resp As String = ASL_Tools.Get_StampProperty(em)
+
+            If resp = "" Then
+                MsgBox("No message key set")
+            Else
+
+                MsgBox(resp)
+                Dim msgProperties As ASLmessageProperties = New ASLmessageProperties
+                msgProperties = ASL_Tools.Get_StampProperty_MessageProperties(em)
+
+                MsgBox("Project: " & msgProperties.proj & vbLf & "TimeStamp: " & msgProperties.timestamp & vbLf & "Type: " & msgProperties.messagetype)
+            End If
+        End If
+
     End Sub
 End Class

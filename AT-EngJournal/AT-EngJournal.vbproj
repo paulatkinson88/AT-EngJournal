@@ -225,6 +225,12 @@
     <Compile Include="form_EmailSend.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="form_ViewOfflineFiles.Designer.vb">
+      <DependentUpon>form_ViewOfflineFiles.vb</DependentUpon>
+    </Compile>
+    <Compile Include="form_ViewOfflineFiles.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ThisAddIn.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -243,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="form_EmailSend.resx">
       <DependentUpon>form_EmailSend.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form_ViewOfflineFiles.resx">
+      <DependentUpon>form_ViewOfflineFiles.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -291,6 +300,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\dialog-close-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mail-forward-5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit-find-project.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

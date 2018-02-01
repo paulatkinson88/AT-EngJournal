@@ -15,3 +15,4 @@ C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJourn
 C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.pdb
 C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT_EngJournal.form_EmailRecord.resources
 C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.vbprojResolveAssemblyReference.cache
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT_EngJournal.form_ViewOfflineFiles.resources
