@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class form_EmailRecord
+Partial Class form_emailMove
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,16 +22,28 @@ Partial Class form_EmailRecord
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.button_skip = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
         Me.button_record = New System.Windows.Forms.Button()
-        Me.button_skip = New System.Windows.Forms.Button()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
+        '
+        'button_skip
+        '
+        Me.button_skip.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.button_skip.Image = Global.AT_EngJournal.My.Resources.Resources.dialog_close_2
+        Me.button_skip.Location = New System.Drawing.Point(365, 105)
+        Me.button_skip.Name = "button_skip"
+        Me.button_skip.Size = New System.Drawing.Size(104, 42)
+        Me.button_skip.TabIndex = 11
+        Me.button_skip.Text = "Cancel"
+        Me.button_skip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.button_skip.UseVisualStyleBackColor = True
         '
         'Panel1
         '
@@ -44,55 +56,7 @@ Partial Class form_EmailRecord
         Me.Panel1.Location = New System.Drawing.Point(8, 10)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(469, 89)
-        Me.Panel1.TabIndex = 8
-        '
-        'Label1
-        '
-        Me.Label1.Location = New System.Drawing.Point(14, 16)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(440, 21)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "If you wish to record this email, please enter a job number in the text box and s" &
-    "elect Record."
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(190, 52)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(62, 20)
-        Me.TextBox1.TabIndex = 1
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(101, 55)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(83, 13)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Project Number:"
-        '
-        'button_record
-        '
-        Me.button_record.Image = Global.AT_EngJournal.My.Resources.Resources.mail_receive
-        Me.button_record.Location = New System.Drawing.Point(272, 40)
-        Me.button_record.Name = "button_record"
-        Me.button_record.Size = New System.Drawing.Size(104, 42)
-        Me.button_record.TabIndex = 3
-        Me.button_record.Text = "Record"
-        Me.button_record.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.button_record.UseVisualStyleBackColor = True
-        '
-        'button_skip
-        '
-        Me.button_skip.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.button_skip.Image = Global.AT_EngJournal.My.Resources.Resources.dialog_close_2
-        Me.button_skip.Location = New System.Drawing.Point(365, 105)
-        Me.button_skip.Name = "button_skip"
-        Me.button_skip.Size = New System.Drawing.Size(104, 42)
-        Me.button_skip.TabIndex = 9
-        Me.button_skip.Text = "Cancel"
-        Me.button_skip.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
-        Me.button_skip.UseVisualStyleBackColor = True
+        Me.Panel1.TabIndex = 10
         '
         'PictureBox1
         '
@@ -103,7 +67,43 @@ Partial Class form_EmailRecord
         Me.PictureBox1.TabIndex = 4
         Me.PictureBox1.TabStop = False
         '
-        'form_EmailRecord
+        'Label1
+        '
+        Me.Label1.Location = New System.Drawing.Point(14, 16)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(440, 21)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "If you wish to move this email, please enter a job number in the text box and sel" &
+    "ect Move."
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(190, 52)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(62, 20)
+        Me.TextBox1.TabIndex = 1
+        '
+        'button_record
+        '
+        Me.button_record.Image = Global.AT_EngJournal.My.Resources.Resources.mail_forward_5
+        Me.button_record.Location = New System.Drawing.Point(272, 40)
+        Me.button_record.Name = "button_record"
+        Me.button_record.Size = New System.Drawing.Size(104, 42)
+        Me.button_record.TabIndex = 3
+        Me.button_record.Text = "Move"
+        Me.button_record.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.button_record.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(101, 55)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(83, 13)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "Project Number:"
+        '
+        'form_emailMove
         '
         Me.AcceptButton = Me.button_record
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -116,11 +116,11 @@ Partial Class form_EmailRecord
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "form_EmailRecord"
+        Me.Name = "form_emailMove"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Record Email"
+        Me.Text = "Move Email"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()

@@ -154,7 +154,7 @@ Public Class ASL_Ribbon
     Private Sub Button4_Click(sender As Object, e As RibbonControlEventArgs) Handles button_pushOfflineFilestoServer.Click
         'for each file that is offline. push them to the server.
         For Each mo As Outlook.MailItem In ASL_Tools.msList
-            Dim msgProperties As ASLmessageProperties = ASL_Tools.Get_StampProperty_MessageProperties(mo)
+            Dim msgProperties As ASLmessageProperties = ASL_Tools.Get_StampProperty(mo)
 
             If msgProperties.messagetype = "re" Or msgProperties.messagetype = "se" Then
                 If ASL_Tools.networkReady = True Then
@@ -163,8 +163,8 @@ Public Class ASL_Ribbon
                     If Not (IsNothing(di)) Then
                         'use the messageKeyValue as the message name when saving to the 
                         'network
-                        mo.SaveAs(di.FullName & "\(" & msgProperties.proj & ")(" & msgProperties.timestamp & ")(" & msgProperties.messagetype & ")" & ".msg")
                         mo.Categories = ""
+                        mo.SaveAs(di.FullName & "\(" & msgProperties.proj & ")(" & msgProperties.timestamp & ")(" & msgProperties.messagetype & ")" & ".msg")
                     End If
                 End If
             Else
@@ -180,18 +180,70 @@ Public Class ASL_Ribbon
     End Sub
 
     Private Sub Button4_Click_1(sender As Object, e As RibbonControlEventArgs) Handles button_viewOfflineFiles.Click
-        If IsNothing(ASL_Tools.offLineFileForm) Then
+        Try
+            ASL_Tools.offLineFileForm.Show()
+        Catch ex As Exception
             ASL_Tools.offLineFileForm = New form_ViewOfflineFiles
             ASL_Tools.offLineFileForm.Show()
-        Else
-            ASL_Tools.offLineFileForm.Show()
-        End If
+        End Try
+
         ASL_Tools.offLineFileForm.Focus()
 
     End Sub
 
     Private Sub button_MoveEmail_Click(sender As Object, e As RibbonControlEventArgs) Handles button_MoveEmail.Click
+        'allow the user to move emails from one project to another.
+        'check to see if they are in a project directory or in a sent folder under the project directory
+        'you cannot move an email if you are not connected to the network
+        If Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count = 0 Then Exit Sub
 
+        If Not (ASL_Tools.networkReady) Then
+            MsgBox("You need to be connected to the network to move emails to another project.", vbCritical, "Error")
+            Exit Sub
+        End If
+
+        Dim frm As form_emailMove = New form_emailMove
+        Dim emList As List(Of Outlook.MailItem) = New List(Of Outlook.MailItem)
+        For Each obj As Outlook.MailItem In Globals.ThisAddIn.Application.ActiveExplorer.Selection
+            emList.Add(obj)
+
+        Next
+        Globals.ThisAddIn.Application.ActiveExplorer.ClearSelection()
+
+        For Each em As Outlook.MailItem In emList
+            Dim fld As String = em.Parent.FullFolderPath
+            Dim fldObj() As String = fld.Split("\")
+
+            Dim msgProp As ASLmessageProperties = ASL_Tools.Get_StampProperty(em)
+            If msgProp.messagetype = "se" Then
+                'sent item will be in the sent directory under the project
+                'check to see the message inbox word is in the third point of the back of the folder array
+                Dim fldInbox As String = fldObj(fldObj.Length - 3)
+                If fldInbox = "Inbox" Then
+                    'the message is in the correct spot.
+                    'get the users input for the project to be in.
+                    frm.em2 = em
+                    frm.msgProp = msgProp
+                    frm.ShowDialog()
+                    frm.Close()
+                End If
+            ElseIf msgProp.messagetype = "re" Then
+                'received item will be in the project directory
+                'check to see the message inbox word is in the second point of the back of the folder array
+                Dim fldinbox As String = fldObj(fldObj.Length - 2)
+                If fldinbox = "Inbox" Then
+                    'the message is in the correct spot.
+                    'get the users input for the project to be in.
+                    frm.em2 = em
+                    frm.msgProp = msgProp
+                    frm.ShowDialog()
+                    frm.Close()
+                End If
+            Else
+                MsgBox("Message is damaged and cannot be moved." & vbLf & em.Subject, vbCritical, "Error")
+            End If
+
+        Next
 
     End Sub
 
@@ -207,17 +259,12 @@ Public Class ASL_Ribbon
         Dim senderDomain As String = ASL_Tools.Get_Domain_From_Address(em.Parent.store.displayname.ToString)
 
         If senderDomain = "asltd.com" Then
-            Dim resp As String = ASL_Tools.Get_StampProperty(em)
+            Dim resp As ASLmessageProperties = ASL_Tools.Get_StampProperty(em)
 
-            If resp = "" Then
+            If resp.proj = "" Then
                 MsgBox("No message key set")
             Else
-
-                MsgBox(resp)
-                Dim msgProperties As ASLmessageProperties = New ASLmessageProperties
-                msgProperties = ASL_Tools.Get_StampProperty_MessageProperties(em)
-
-                MsgBox("Project: " & msgProperties.proj & vbLf & "TimeStamp: " & msgProperties.timestamp & vbLf & "Type: " & msgProperties.messagetype)
+                MsgBox("Project: " & resp.proj & vbLf & "TimeStamp: " & resp.timestamp & vbLf & "Type: " & resp.messagetype)
             End If
         End If
 

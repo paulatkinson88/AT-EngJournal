@@ -57,14 +57,14 @@
         Me.Box3 = Me.Factory.CreateRibbonBox
         Me.Label1 = Me.Factory.CreateRibbonLabel
         Me.label_version = Me.Factory.CreateRibbonLabel
+        Me.Button2 = Me.Factory.CreateRibbonButton
+        Me.Button3 = Me.Factory.CreateRibbonButton
         Me.Button1 = Me.Factory.CreateRibbonButton
         Me.button_OfflineFilesCount = Me.Factory.CreateRibbonButton
         Me.button_pushOfflineFilestoServer = Me.Factory.CreateRibbonButton
         Me.button_viewOfflineFiles = Me.Factory.CreateRibbonButton
         Me.button_recordEmail = Me.Factory.CreateRibbonButton
         Me.button_MoveEmail = Me.Factory.CreateRibbonButton
-        Me.Button2 = Me.Factory.CreateRibbonButton
-        Me.Button3 = Me.Factory.CreateRibbonButton
         Me.button_getUserProperties = Me.Factory.CreateRibbonButton
         Me.Tab1.SuspendLayout()
         Me.Group1.SuspendLayout()
@@ -182,6 +182,18 @@
         Me.label_version.Label = "-"
         Me.label_version.Name = "label_version"
         '
+        'Button2
+        '
+        Me.Button2.Enabled = False
+        Me.Button2.Label = "Button2"
+        Me.Button2.Name = "Button2"
+        '
+        'Button3
+        '
+        Me.Button3.Enabled = False
+        Me.Button3.Label = "Button3"
+        Me.Button3.Name = "Button3"
+        '
         'Button1
         '
         Me.Button1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
@@ -230,19 +242,10 @@
         Me.button_MoveEmail.Name = "button_MoveEmail"
         Me.button_MoveEmail.ShowImage = True
         '
-        'Button2
-        '
-        Me.Button2.Label = "Button2"
-        Me.Button2.Name = "Button2"
-        '
-        'Button3
-        '
-        Me.Button3.Label = "Button3"
-        Me.Button3.Name = "Button3"
-        '
         'button_getUserProperties
         '
         Me.button_getUserProperties.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_getUserProperties.Image = Global.AT_EngJournal.My.Resources.Resources.documentation
         Me.button_getUserProperties.Label = "Get UserProperties"
         Me.button_getUserProperties.Name = "button_getUserProperties"
         Me.button_getUserProperties.ShowImage = True

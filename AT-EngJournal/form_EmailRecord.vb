@@ -77,4 +77,8 @@
     Private Sub form_EmailRecord_Shown(sender As Object, e As EventArgs) Handles Me.Shown
 
     End Sub
+
+    Private Sub form_EmailRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

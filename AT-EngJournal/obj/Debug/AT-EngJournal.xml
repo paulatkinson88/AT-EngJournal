@@ -32,6 +32,11 @@ AT-EngJournal
   Looks up a localized resource of type System.Drawing.Bitmap.
 </summary>
 </member>
+<member name="P:AT_EngJournal.My.Resources.Resources.documentation">
+<summary>
+  Looks up a localized resource of type System.Drawing.Bitmap.
+</summary>
+</member>
 <member name="P:AT_EngJournal.My.Resources.Resources.edit_find_project">
 <summary>
   Looks up a localized resource of type System.Drawing.Bitmap.
@@ -121,6 +126,34 @@ AT-EngJournal
  </summary>
  <param name="pf"></param>
  <returns></returns>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.Set_StampProperty(Microsoft.Office.Interop.Outlook.MailItem,System.String)">
+ <summary>
+ every email in outlook that the program moves to a project will have
+ a custom message property called messageKeyTag
+ it is a string containing the project number the date stampp and the message type
+ (1906)(2018-01-01-1234-45-45)(re)
+ </summary>
+ <param name="maIt"></param>
+ <param name="st"></param>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.Get_StampProperty(Microsoft.Office.Interop.Outlook.MailItem)">
+ <summary>
+ every email in outlook that the program moves to a project will have
+ a custom message property called messageKeyTag
+ it is a string containing the project number the date stampp and the message type
+ (1906)(2018-01-01-1234-45-45)(re)
+ </summary>
+ <param name="maIt"></param>
+ <returns></returns>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.remove_ASLMessage(AT_EngJournal.ASLmessageProperties,System.IO.DirectoryInfo)">
+ <summary>
+ used to delete a message file when moving an email.
+ called from form_emailmove
+ </summary>
+ <param name="msgProp"></param>
+ <param name="fld"></param>
 </member>
 <member name="T:AT_EngJournal.ThisAddIn">
 

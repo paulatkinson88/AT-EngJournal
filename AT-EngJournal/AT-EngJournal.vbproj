@@ -213,6 +213,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ASL_Tools.vb" />
+    <Compile Include="form_EmailMove.Designer.vb">
+      <DependentUpon>form_EmailMove.vb</DependentUpon>
+    </Compile>
+    <Compile Include="form_EmailMove.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="form_EmailRecord.Designer.vb">
       <DependentUpon>form_EmailRecord.vb</DependentUpon>
     </Compile>
@@ -243,6 +249,9 @@
     <Compile Include="My Project\AssemblyInfo.vb" />
     <EmbeddedResource Include="ASL_Ribbon.resx">
       <DependentUpon>ASL_Ribbon.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form_emailMove.resx">
+      <DependentUpon>form_EmailMove.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="form_EmailRecord.resx">
       <DependentUpon>form_EmailRecord.vb</DependentUpon>
@@ -306,6 +315,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\edit-find-project.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\documentation.png" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

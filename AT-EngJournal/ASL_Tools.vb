@@ -323,14 +323,14 @@ Module ASL_Tools
         Return fld
     End Function
 
-    Public Function get_ProjectNumber_From_MsgFolder(ms As Outlook.MailItem) As String
-        Dim retVal As String = ""
-
-        'ms.
-
-        Return retVal
-    End Function
-
+    ''' <summary>
+    ''' every email in outlook that the program moves to a project will have
+    ''' a custom message property called messageKeyTag
+    ''' it is a string containing the project number the date stampp and the message type
+    ''' (1906)(2018-01-01-1234-45-45)(re)
+    ''' </summary>
+    ''' <param name="maIt"></param>
+    ''' <param name="st"></param>
     Public Sub Set_StampProperty(maIt As Outlook.MailItem, st As String)
         Dim fnd As Boolean = False
 
@@ -349,20 +349,15 @@ Module ASL_Tools
 
     End Sub
 
-    Public Function Get_StampProperty(maIt As Outlook.MailItem) As String
-        Dim retVal As String = ""
-
-        For Each upro As Outlook.UserProperty In maIt.UserProperties
-            If upro.Name = "messageKeyTag" Then
-                retVal = upro.Value
-                Exit For
-            End If
-        Next
-
-        Return retVal
-    End Function
-
-    Public Function Get_StampProperty_MessageProperties(maIt As Outlook.MailItem) As ASLmessageProperties
+    ''' <summary>
+    ''' every email in outlook that the program moves to a project will have
+    ''' a custom message property called messageKeyTag
+    ''' it is a string containing the project number the date stampp and the message type
+    ''' (1906)(2018-01-01-1234-45-45)(re)
+    ''' </summary>
+    ''' <param name="maIt"></param>
+    ''' <returns></returns>
+    Public Function Get_StampProperty(maIt As Outlook.MailItem) As ASLmessageProperties
         Dim retVal As ASLmessageProperties = New ASLmessageProperties
         Dim keyVal As String = ""
 
@@ -385,6 +380,23 @@ Module ASL_Tools
         Return retVal
     End Function
 
+    ''' <summary>
+    ''' used to delete a message file when moving an email.
+    ''' called from form_emailmove
+    ''' </summary>
+    ''' <param name="msgProp"></param>
+    ''' <param name="fld"></param>
+    Public Sub remove_ASLMessage(msgProp As ASLmessageProperties, fld As System.IO.DirectoryInfo)
+
+        Dim st As String = "(" & msgProp.proj & ")(" & msgProp.timestamp & ")(" & msgProp.messagetype & ")"
+        'MsgBox(System.IO.Directory.Exists(fld.FullName))
+        Dim fl = (fld.FullName & "\" & st & ".msg")
+
+        If System.IO.File.Exists(fl) Then
+            System.IO.File.Delete(fl)
+        End If
+
+    End Sub
 End Module
 
 Public Class ASLmessageProperties
