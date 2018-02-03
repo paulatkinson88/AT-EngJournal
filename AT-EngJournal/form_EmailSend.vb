@@ -54,9 +54,11 @@ Public Class form_EmailSend
         'if they are then save a copy of the email to the project folder
         'if not then flag the message with the category offline
         'offline messages can get copied to network at a later date.
+        Dim username As String = ASL_Tools.aslStore.DisplayName
+
         If ASL_Tools.networkReady = True Then
             'copy to network
-            Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(proj)
+            Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(proj, username)
             If IsNothing(di) Then
                 itemCopy.Categories = "Offline"
             Else

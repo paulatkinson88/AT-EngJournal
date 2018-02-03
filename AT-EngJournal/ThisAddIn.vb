@@ -6,6 +6,13 @@ Public Class ThisAddIn
 
         ASL_Tools.app = Me.Application
 
+        Dim tmpdisc As String = ASL_Tools.get_discipline()
+        If Not (tmpdisc = "") Then
+            ASL_Tools.enable_discipline(tmpdisc)
+        Else
+            ASL_Tools.disable_discipline()
+        End If
+
         'Check_OfflineCategory()
     End Sub
 
@@ -14,6 +21,11 @@ Public Class ThisAddIn
     End Sub
 
     Private Sub Application_ItemSend(Item As Object, ByRef Cancel As Boolean) Handles Application.ItemSend
+        If ASL_Tools.aslDiscipline = "" Then
+            MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline so you can record emails", vbCritical, "Error")
+            Exit Sub
+        End If
+
         Dim olmi As Outlook.MailItem = Item
 
         'get the senders domain name.

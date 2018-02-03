@@ -152,6 +152,13 @@ Public Class ASL_Ribbon
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As RibbonControlEventArgs) Handles button_pushOfflineFilestoServer.Click
+        If ASL_Tools.aslDiscipline = "" Then
+            MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
+            Exit Sub
+        End If
+
+        Dim username As String = ASL_Tools.aslStore.DisplayName
+
         'for each file that is offline. push them to the server.
         For Each mo As Outlook.MailItem In ASL_Tools.msList
             Dim msgProperties As ASLmessageProperties = ASL_Tools.Get_StampProperty(mo)
@@ -159,7 +166,7 @@ Public Class ASL_Ribbon
             If msgProperties.messagetype = "re" Or msgProperties.messagetype = "se" Then
                 If ASL_Tools.networkReady = True Then
                     'copy to network
-                    Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(msgProperties.proj)
+                    Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(msgProperties.proj, username)
                     If Not (IsNothing(di)) Then
                         'use the messageKeyValue as the message name when saving to the 
                         'network
@@ -176,6 +183,10 @@ Public Class ASL_Ribbon
     End Sub
 
     Private Sub button_recordEmail_Click(sender As Object, e As RibbonControlEventArgs) Handles button_recordEmail.Click
+        If ASL_Tools.aslDiscipline = "" Then
+            MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
+            Exit Sub
+        End If
         Globals.ThisAddIn.Application_ItemRecord()
     End Sub
 
@@ -192,6 +203,11 @@ Public Class ASL_Ribbon
     End Sub
 
     Private Sub button_MoveEmail_Click(sender As Object, e As RibbonControlEventArgs) Handles button_MoveEmail.Click
+        If ASL_Tools.aslDiscipline = "" Then
+            MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
+            Exit Sub
+        End If
+
         'allow the user to move emails from one project to another.
         'check to see if they are in a project directory or in a sent folder under the project directory
         'you cannot move an email if you are not connected to the network
@@ -268,5 +284,14 @@ Public Class ASL_Ribbon
             End If
         End If
 
+    End Sub
+
+    Private Sub button_discipline_Click(sender As Object, e As RibbonControlEventArgs) Handles button_discipline.Click
+        'open the dialogue box to show the discipline
+        Dim frm As form_setDiscipline = New form_setDiscipline
+
+        frm.ShowDialog()
+
+        frm.Close()
     End Sub
 End Class

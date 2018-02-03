@@ -16,4 +16,4 @@ C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJourn
 C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.dll
 C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.xml
 C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.pdb
-C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT-EngJournal.vbprojResolveAssemblyReference.cache
+C:\Users\paul\Documents\GitHub\AT-EngJournal\AT-EngJournal\obj\Debug\AT_EngJournal.form_setDiscipline.resources

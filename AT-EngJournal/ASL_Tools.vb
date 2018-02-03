@@ -3,11 +3,13 @@
 Module ASL_Tools
     Public app As Outlook.Application
 
-    Public dirObj As String = "K:\"
+    Public dirObj As String = "J:\"
     Public networkReady As Boolean = False
     Public aslStore As Outlook.Store
 
     Public offlineFileCount As Integer = 0
+
+    Public aslDiscipline As String = ""
 
     'global working project folder reference
     Public wProjFld As Outlook.Folder
@@ -129,20 +131,47 @@ Module ASL_Tools
         Return retVal
     End Function
 
-    Public Function Check_For_ProjectDirectoryEngJournal(pro As String) As System.IO.DirectoryInfo
+    ''' <summary>
+    ''' routine used for network storage.
+    ''' check the project directory exists.
+    ''' </summary>
+    ''' <param name="pro"></param>
+    ''' <returns></returns>
+    Public Function Check_For_ProjectDirectoryEngJournal(pro As String, username As String) As System.IO.DirectoryInfo
         Dim retVal As System.IO.DirectoryInfo = Nothing
         Dim di As System.IO.DirectoryInfo = Nothing
+
+        Dim disc As String = ""
+        Dim discPath As String = ""
+
+        Select Case ASL_Tools.aslDiscipline
+            Case = "Electrical"
+                disc = "E"
+                discPath = "\E\CORRESPONDENCE"
+            Case = "Mechanical"
+                disc = "M"
+                discPath = "\M\CORRESPONDENCE"
+            Case = "Structural"
+                disc = "S"
+                discPath = "\S\CORRESPONDENCE"
+            Case Else
+                MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
+                Return di
+                Exit Function
+        End Select
 
         Dim projDirectory As String = dirObj & pro.Substring(0, 2) & "XX\" & pro
         'if the project directory exists then move to next check
         If System.IO.Directory.Exists(projDirectory) Then
-            If Not (System.IO.Directory.Exists(projDirectory & "\EngJournal")) Then
-                'check to see if the engineering journal exists.
+            If Not (System.IO.Directory.Exists(projDirectory & discPath & "\" & username)) Then
+                'check to see if the CORRESPONDENCE DIRECTORY exists.
                 'if it does not exist then create it.
                 di = New System.IO.DirectoryInfo(projDirectory)
-                di = di.CreateSubdirectory("EngJournal")
+                di = di.CreateSubdirectory(disc)
+                di = di.CreateSubdirectory("CORRESPONDENCE")
+                di = di.CreateSubdirectory(username)
             Else
-                di = New System.IO.DirectoryInfo(projDirectory & "\EngJournal")
+                di = New System.IO.DirectoryInfo(projDirectory & discPath & "\" & username)
             End If
             'add the message file.
 
@@ -150,7 +179,7 @@ Module ASL_Tools
 
         Else
             'project directory missing
-            MsgBox("Project Directory does not exist", vbCritical, "Error")
+            MsgBox("Project Directory on the network does not exist", vbCritical, "Error")
         End If
 
         Return retVal
@@ -395,6 +424,69 @@ Module ASL_Tools
         If System.IO.File.Exists(fl) Then
             System.IO.File.Delete(fl)
         End If
+
+    End Sub
+
+    ''' <summary>
+    ''' gets the discipline from the registry
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function get_discipline() As String
+        Dim disc As String = ""
+
+        Dim tempdisc As String = My.Computer.Registry.GetValue("HKEY_CURRENT_USER\AT_EngJournal", "discipline", "")
+        If Not (tempdisc = "") Then
+            disc = tempdisc
+        End If
+        Return disc
+    End Function
+
+    ''' <summary>
+    ''' sets the discipline to the registry
+    ''' </summary>
+    ''' <param name="disc"></param>
+    Public Sub set_discipline(disc)
+        If Not (disc = "") Then
+            My.Computer.Registry.SetValue("HKEY_CURRENT_USER\AT_EngJournal", "discipline", disc)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' enables everything to do with the discipline and sets the registry
+    ''' </summary>
+    ''' <param name="disc"></param>
+    Public Sub enable_discipline(disc As String)
+        'store the discipline in the registry
+        ASL_Tools.set_discipline(disc)
+
+        'set teh discipline in the global variable
+        ASL_Tools.aslDiscipline = disc
+
+        'update the ribbon bar to show the discipline
+        Globals.Ribbons.ASL_Ribbon.label_discipline.Label = disc
+
+        'enable the buttons on the ribbon bar.
+        Globals.Ribbons.ASL_Ribbon.button_MoveEmail.Enabled = True
+        Globals.Ribbons.ASL_Ribbon.button_pushOfflineFilestoServer.Enabled = True
+        Globals.Ribbons.ASL_Ribbon.button_recordEmail.Enabled = True
+    End Sub
+
+    ''' <summary>
+    ''' disables everyting to do with the registry
+    ''' </summary>
+    Public Sub disable_discipline()
+        MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
+
+        'set teh discipline in the global variable
+        ASL_Tools.aslDiscipline = ""
+
+        'update the ribbon bar to show the discipline
+        Globals.Ribbons.ASL_Ribbon.label_discipline.Label = "-"
+
+        'enable the buttons on the ribbon bar.
+        Globals.Ribbons.ASL_Ribbon.button_MoveEmail.Enabled = False
+        Globals.Ribbons.ASL_Ribbon.button_pushOfflineFilestoServer.Enabled = False
+        Globals.Ribbons.ASL_Ribbon.button_recordEmail.Enabled = False
 
     End Sub
 End Module

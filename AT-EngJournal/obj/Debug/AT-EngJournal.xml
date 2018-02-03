@@ -88,6 +88,14 @@ AT-EngJournal
 <member name="M:AT_EngJournal.ThisRibbonCollection.#ctor(Microsoft.Office.Tools.Ribbon.RibbonFactory)">
 
 </member>
+<member name="M:AT_EngJournal.ASL_Tools.Check_For_ProjectDirectoryEngJournal(System.String,System.String)">
+ <summary>
+ routine used for network storage.
+ check the project directory exists.
+ </summary>
+ <param name="pro"></param>
+ <returns></returns>
+</member>
 <member name="M:AT_EngJournal.ASL_Tools.Get_ASL_Store">
  <summary>
  Finds the asl store in all the stores on the outlook application session
@@ -154,6 +162,29 @@ AT-EngJournal
  </summary>
  <param name="msgProp"></param>
  <param name="fld"></param>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.get_discipline">
+ <summary>
+ gets the discipline from the registry
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.set_discipline(System.Object)">
+ <summary>
+ sets the discipline to the registry
+ </summary>
+ <param name="disc"></param>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.enable_discipline(System.String)">
+ <summary>
+ enables everything to do with the discipline and sets the registry
+ </summary>
+ <param name="disc"></param>
+</member>
+<member name="M:AT_EngJournal.ASL_Tools.disable_discipline">
+ <summary>
+ disables everyting to do with the registry
+ </summary>
 </member>
 <member name="T:AT_EngJournal.ThisAddIn">
 
