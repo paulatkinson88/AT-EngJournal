@@ -10,13 +10,10 @@ Public Class ASL_Ribbon
         Dim bob = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
 
         label_version.Label = bob.ToString
-        'ApplicationDeployment.CurrentDeployment.CurrentVersion
-        Fill_Label_OffLineFileCount()
-    End Sub
 
-    Private Sub Fill_Label_OffLineFileCount()
-        ASL_Tools.Get_OffLineFileCount()
+        ASL_Tools.GetOfflineMessages()
         label_offlinefilecount.Label = ASL_Tools.offlineFileCount
+
     End Sub
 
     Private Sub button_checkForNetwork_Click(sender As Object, e As RibbonControlEventArgs)
@@ -36,53 +33,25 @@ Public Class ASL_Ribbon
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As RibbonControlEventArgs) Handles Button2.Click
-        Dim mIns As Outlook.Inspector = ASL_Tools.app.ActiveInspector
-        If Not (IsNothing(mIns)) Then
-            Debug.Print(mIns.GetType.ToString)
-        End If
-
-        Dim st As String = InputBox("Find Project:", "Find")
-
-
-        'begin the structure for the send function
-
-        'copy the message to the folder
-        '   find the projectfolder in the aslstore
-
-        Dim fld As Outlook.Folder = ASL_Tools.Get_ProjectFolder_In_ASLStoreInbox(st)
-
-        'if the project is not found then create it.
-        If IsNothing(fld) Then
-            MsgBox("No Project Found", vbCritical, "Error")
-            'create the project folder
-            fld = ASL_Tools.Create_ProjectFolder_In_ASLStoreInbox(st)
-            If IsNothing(fld) Then
-                MsgBox("Error getting or creating project", vbCritical, "Error")
-                Exit Sub
-            End If
-        End If
-
-        'with the project folder
-        'get the sent folder
-        Dim fldSent As Outlook.Folder = ASL_Tools.Get_ProjectFolderSent(fld)
-
-        If IsNothing(fldSent) Then
-            fldSent = ASL_Tools.Create_ProjectFolderSent(fld)
-            If IsNothing(fldSent) Then
-                MsgBox("Error creating sent folder", vbCritical, "Error")
-                Exit Sub
-            End If
-        End If
-
-        'we now have the project folder and the sent folder to save the sent message to.
-
-
-        MsgBox("Folder NameOf: " & fld.Name & "  Message Count: " & fld.Items.Count.ToString)
+        'test
+        ASL_Tools.ProcessSentMessages()
 
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As RibbonControlEventArgs) Handles Button3.Click
-        ASL_Tools.Get_ASL_Store()
+        If Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count = 0 Then Exit Sub
+
+        Dim em As Outlook.MailItem = Globals.ThisAddIn.Application.ActiveExplorer.Selection.Item(1)
+
+        Dim senderDomain As String = ASL_Tools.Get_Domain_From_Address(em.Parent.store.displayname.ToString)
+
+        If senderDomain = "asltd.com" Then
+            Dim resp As class_MailItemTools = New class_MailItemTools
+
+            resp.maItem = em
+            resp.Get_PropertyAccessorObj()
+            resp.show_properties()
+        End If
 
     End Sub
 
@@ -147,39 +116,30 @@ Public Class ASL_Ribbon
     End Sub
 
     Private Sub button_OfflineFilesCount_Click(sender As Object, e As RibbonControlEventArgs) Handles button_OfflineFilesCount.Click
-        Fill_Label_OffLineFileCount()
 
+        Dim resp = MsgBox("This can be a long process. Do you wish to continue?", vbYesNo, "Get Offline Files")
+        If resp = vbYes Then
+            ASL_Tools.GetOfflineMessages()
+        End If
+
+        label_offlinefilecount.Label = ASL_Tools.offlineFileCount.ToString
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As RibbonControlEventArgs) Handles button_pushOfflineFilestoServer.Click
+
+        'push offline files to server
+
         If ASL_Tools.aslDiscipline = "" Then
             MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
             Exit Sub
         End If
 
-        Dim username As String = ASL_Tools.aslStore.DisplayName
+        ASL_Tools.ProcessOfflineMessages()
 
-        'for each file that is offline. push them to the server.
-        For Each mo As Outlook.MailItem In ASL_Tools.msList
-            Dim msgProperties As ASLmessageProperties = ASL_Tools.Get_StampProperty(mo)
+        ASL_Tools.GetOfflineMessages()
+        label_offlinefilecount.Label = ASL_Tools.offlineFileCount
 
-            If msgProperties.messagetype = "re" Or msgProperties.messagetype = "se" Then
-                If ASL_Tools.networkReady = True Then
-                    'copy to network
-                    Dim di As System.IO.DirectoryInfo = ASL_Tools.Check_For_ProjectDirectoryEngJournal(msgProperties.proj, username)
-                    If Not (IsNothing(di)) Then
-                        'use the messageKeyValue as the message name when saving to the 
-                        'network
-                        mo.Categories = ""
-                        mo.SaveAs(di.FullName & "\(" & msgProperties.proj & ")(" & msgProperties.timestamp & ")(" & msgProperties.messagetype & ")" & ".msg")
-                    End If
-                End If
-            Else
-                MsgBox("Message is damaged and cannot be stored on Network." & vbLf & mo.Subject, vbCritical, "Error")
-            End If
-        Next
 
-        Fill_Label_OffLineFileCount()
     End Sub
 
     Private Sub button_recordEmail_Click(sender As Object, e As RibbonControlEventArgs) Handles button_recordEmail.Click
@@ -187,6 +147,7 @@ Public Class ASL_Ribbon
             MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
             Exit Sub
         End If
+
         Globals.ThisAddIn.Application_ItemRecord()
     End Sub
 
@@ -218,55 +179,63 @@ Public Class ASL_Ribbon
             Exit Sub
         End If
 
+        'get the first message in the selection and get its project number.
+        Dim firstMessage As Outlook.MailItem = Globals.ThisAddIn.Application.ActiveExplorer.Selection(1)
+        Dim firstMailItem As class_MailItemTools = New class_MailItemTools
+        firstMailItem.maItem = firstMessage
+        firstMailItem.msgProp.Get_AllProperties(firstMailItem.maItem)
+        Dim oldProj As String = firstMailItem.msgProp.proj
+
+        'get the new project number
         Dim frm As form_emailMove = New form_emailMove
+        frm.ShowDialog()
+        If frm.proj = "" Then
+            'no project number selected
+            Exit Sub
+        ElseIf frm.proj = oldproj Then
+            'the user selected the same project number
+            Exit Sub
+        End If
+
+
+        'get all the selected messages and store them in a colleciton
         Dim emList As List(Of Outlook.MailItem) = New List(Of Outlook.MailItem)
         For Each obj As Outlook.MailItem In Globals.ThisAddIn.Application.ActiveExplorer.Selection
             emList.Add(obj)
-
         Next
         Globals.ThisAddIn.Application.ActiveExplorer.ClearSelection()
 
+        'process the all the messages with the new project number
         For Each em As Outlook.MailItem In emList
             Dim fld As String = em.Parent.FullFolderPath
             Dim fldObj() As String = fld.Split("\")
 
-            Dim msgProp As ASLmessageProperties = ASL_Tools.Get_StampProperty(em)
-            If msgProp.messagetype = "se" Then
-                'sent item will be in the sent directory under the project
-                'check to see the message inbox word is in the third point of the back of the folder array
+            Dim ma As class_MailItemTools = New class_MailItemTools
+            ma.maItem = em
+            ma.msgProp.Get_AllProperties(ma.maItem)
+
+            If ma.msgProp.messagetype = "se" Then
                 Dim fldInbox As String = fldObj(fldObj.Length - 3)
                 If fldInbox = "Inbox" Then
-                    'the message is in the correct spot.
-                    'get the users input for the project to be in.
-                    frm.em2 = em
-                    frm.msgProp = msgProp
-                    frm.ShowDialog()
-                    frm.Close()
+                    ma.Move_MailItem_OnStore(frm.proj)
                 End If
-            ElseIf msgProp.messagetype = "re" Then
-                'received item will be in the project directory
-                'check to see the message inbox word is in the second point of the back of the folder array
+            ElseIf ma.msgProp.messagetype = "re" Then
                 Dim fldinbox As String = fldObj(fldObj.Length - 2)
                 If fldinbox = "Inbox" Then
-                    'the message is in the correct spot.
-                    'get the users input for the project to be in.
-                    frm.em2 = em
-                    frm.msgProp = msgProp
-                    frm.ShowDialog()
-                    frm.Close()
+                    ma.Move_MailItem_OnStore(frm.proj)
                 End If
             Else
                 MsgBox("Message is damaged and cannot be moved." & vbLf & em.Subject, vbCritical, "Error")
             End If
-
         Next
+        frm.Close()
 
     End Sub
 
     Private Sub button_getUserProperties_Click(sender As Object, e As RibbonControlEventArgs) Handles button_getUserProperties.Click
         If Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count = 0 Then Exit Sub
 
-        Debug.Print(Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count.ToString)
+        'Debug.Print(Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count.ToString)
         'get the first selected item.
         'if the store the item resides in is in the domain name asltd.com continue
 
@@ -275,12 +244,15 @@ Public Class ASL_Ribbon
         Dim senderDomain As String = ASL_Tools.Get_Domain_From_Address(em.Parent.store.displayname.ToString)
 
         If senderDomain = "asltd.com" Then
-            Dim resp As ASLmessageProperties = ASL_Tools.Get_StampProperty(em)
+            Dim resp As class_MailItemTools = New class_MailItemTools
 
-            If resp.proj = "" Then
-                MsgBox("No message key set")
+            resp.maItem = em
+            resp.Get_PropertyAccessorObj()
+
+            If resp.msgProp.Get_ProjectProperty(resp.maItem) = "" Then
+                MsgBox("id: " & resp.maItem.EntryID & vbLf & "No message key set")
             Else
-                MsgBox("Project: " & resp.proj & vbLf & "TimeStamp: " & resp.timestamp & vbLf & "Type: " & resp.messagetype)
+                MsgBox("id: " & resp.maItem.EntryID & vbLf & "Project: " & resp.msgProp.proj & vbLf & "TimeStamp: " & resp.msgProp.timestamp & vbLf & "Type: " & resp.msgProp.messagetype & vbLf & "Processed: " & resp.msgProp.processed & vbLf & "Stored: " & resp.msgProp.stored)
             End If
         End If
 
@@ -293,5 +265,21 @@ Public Class ASL_Ribbon
         frm.ShowDialog()
 
         frm.Close()
+    End Sub
+
+    Private Sub Button4_Click_2(sender As Object, e As RibbonControlEventArgs) Handles Button4.Click
+        If Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count = 0 Then Exit Sub
+
+        Dim em As Outlook.MailItem = Globals.ThisAddIn.Application.ActiveExplorer.Selection.Item(1)
+
+        Dim senderDomain As String = ASL_Tools.Get_Domain_From_Address(em.Parent.store.displayname.ToString)
+
+        If senderDomain = "asltd.com" Then
+            Dim resp As class_MailItemTools = New class_MailItemTools
+
+            resp.maItem = em
+            resp.Set_PropertyAccessorObj()
+            'resp.show_properties()
+        End If
     End Sub
 End Class

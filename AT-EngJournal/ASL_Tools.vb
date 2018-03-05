@@ -1,4 +1,5 @@
 ﻿Imports System.Diagnostics
+Imports System.Runtime.InteropServices
 
 Module ASL_Tools
     Public app As Outlook.Application
@@ -10,86 +11,16 @@ Module ASL_Tools
     Public offlineFileCount As Integer = 0
 
     Public aslDiscipline As String = ""
+    Public aslSentMailFolder As Outlook.Folder
 
     'global working project folder reference
     Public wProjFld As Outlook.Folder
 
+    'global list of files that are not put to network yet.
     Public msList As List(Of Outlook.MailItem)
 
+    'global form variable used for ViewOffLineFiles
     Public offLineFileForm As form_ViewOfflineFiles = New form_ViewOfflineFiles
-
-    Public Sub Get_OffLineFileCount()
-        ASL_Tools.offlineFileCount = 0
-
-        ASL_Tools.msList = New List(Of Outlook.MailItem)
-
-        If IsNothing(ASL_Tools.aslStore) Then
-            ASL_Tools.Get_ASL_Store()
-        End If
-
-        If IsNothing(ASL_Tools.aslStore) Then
-            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
-            Exit Sub
-        End If
-
-        Dim fldRoot As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
-        Dim fldIn As Outlook.Folder = Nothing
-
-        For Each fld As Outlook.Folder In fldRoot.Folders
-            If fld.Name = "Inbox" Then
-                fldIn = fld
-                Exit For
-            End If
-        Next
-
-        ASL_Tools.EnumerateFolders(fldIn)
-
-
-    End Sub
-
-    Private Sub EnumerateFolders(ByVal oFolder As Outlook.Folder)
-        Dim folders As Outlook.Folders = Nothing
-        Dim Folder As Outlook.Folder = Nothing
-        Dim foldercount As Integer = Nothing
-
-        On Error Resume Next
-        folders = oFolder.Folders
-        foldercount = folders.Count
-        'Check if there are any folders below oFolder 
-        If foldercount Then
-            For Each Folder In folders
-                'Debug.Print(Folder.FolderPath)
-                For Each msIt As Outlook.MailItem In Folder.Items
-                    If Not (IsNothing(msIt.Categories)) Then
-                        'Debug.Print(msIt.Categories)
-
-                        Dim cat As String = msIt.Categories.ToUpper
-                        If Not (cat.IndexOf("OFFLINE") = -1) Then
-
-                            ASL_Tools.offlineFileCount = ASL_Tools.offlineFileCount + 1
-                            ASL_Tools.msList.Add(msIt)
-                        End If
-                    End If
-                Next
-                EnumerateFolders(Folder)
-            Next
-        End If
-    End Sub
-
-    Public Sub Check_OfflineCategory()
-        Dim fndOC As Outlook.Category = Nothing
-
-        For Each oc As Outlook.Category In ASL_Tools.app.Session.Categories
-            If oc.Name = "OffLine" Then
-                fndOC = oc
-                Exit For
-            End If
-        Next
-
-        If IsNothing(fndOC) Then
-            ASL_Tools.app.Session.Categories.Add("OffLine", Outlook.OlCategoryColor.olCategoryColorDarkRed)
-        End If
-    End Sub
 
     Public Function Check_For_Network() As Boolean
         Dim retVal As Boolean = False
@@ -131,60 +62,6 @@ Module ASL_Tools
         Return retVal
     End Function
 
-    ''' <summary>
-    ''' routine used for network storage.
-    ''' check the project directory exists.
-    ''' </summary>
-    ''' <param name="pro"></param>
-    ''' <returns></returns>
-    Public Function Check_For_ProjectDirectoryEngJournal(pro As String, username As String) As System.IO.DirectoryInfo
-        Dim retVal As System.IO.DirectoryInfo = Nothing
-        Dim di As System.IO.DirectoryInfo = Nothing
-
-        Dim disc As String = ""
-        Dim discPath As String = ""
-
-        Select Case ASL_Tools.aslDiscipline
-            Case = "Electrical"
-                disc = "E"
-                discPath = "\E\CORRESPONDENCE"
-            Case = "Mechanical"
-                disc = "M"
-                discPath = "\M\CORRESPONDENCE"
-            Case = "Structural"
-                disc = "S"
-                discPath = "\S\CORRESPONDENCE"
-            Case Else
-                MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
-                Return di
-                Exit Function
-        End Select
-
-        Dim projDirectory As String = dirObj & pro.Substring(0, 2) & "XX\" & pro
-        'if the project directory exists then move to next check
-        If System.IO.Directory.Exists(projDirectory) Then
-            If Not (System.IO.Directory.Exists(projDirectory & discPath & "\" & username)) Then
-                'check to see if the CORRESPONDENCE DIRECTORY exists.
-                'if it does not exist then create it.
-                di = New System.IO.DirectoryInfo(projDirectory)
-                di = di.CreateSubdirectory(disc)
-                di = di.CreateSubdirectory("CORRESPONDENCE")
-                di = di.CreateSubdirectory(username)
-            Else
-                di = New System.IO.DirectoryInfo(projDirectory & discPath & "\" & username)
-            End If
-            'add the message file.
-
-            retVal = di
-
-        Else
-            'project directory missing
-            MsgBox("Project Directory on the network does not exist", vbCritical, "Error")
-        End If
-
-        Return retVal
-    End Function
-
     Public Function Get_Domain_From_Address(email As String) As String
         Dim retVal As String = ""
         Dim pnt As Integer = email.IndexOf("@")
@@ -218,213 +95,39 @@ Module ASL_Tools
 
     End Sub
 
-    ''' <summary>
-    ''' Test function not used.
-    ''' </summary>
-    Public Sub Get_ASL_Store_Folders()
-        If IsNothing(ASL_Tools.aslStore) Then
-            ASL_Tools.Get_ASL_Store()
-        End If
-
-        If IsNothing(ASL_Tools.aslStore) Then
-            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
-            Exit Sub
-        End If
-
-        Dim rtFld As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
-
-        For Each fld As Outlook.Folder In rtFld.Folders
-            If fld.Name = "Inbox" Then
-                For Each subFld As Outlook.Folder In fld.Folders
-                    Debug.Print("     Sub Name: " & subFld.Name)
-                Next
-            End If
-            Debug.Print("   Name: " & fld.Name)
-        Next
-    End Sub
-
-    '====================
-    'ASL Store Functions
-    '====================
-    ''' <summary>
-    ''' Finds the project folder in the ASL store and returns a reference to it
-    ''' </summary>
-    ''' <param name="proj"></param>
-    ''' <returns></returns>
-    Public Function Get_ProjectFolder_In_ASLStoreInbox(ByVal proj As String) As Outlook.Folder
+    Public Function Get_ASL_Store_SentItemsFolder() As Outlook.Folder
         Dim retVal As Outlook.Folder = Nothing
 
-        If IsNothing(ASL_Tools.aslStore) Then
-            ASL_Tools.Get_ASL_Store()
-        End If
 
-        If Not (IsNothing(ASL_Tools.aslStore)) Then
-            'if the store is in memory then look at the root of the folder
-            'then select the inbox foulder and get the sub folders in it.
+        Enumerate_SentItemsFolder(aslStore.GetRootFolder)
 
-            Dim rtFld As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
-
-            For Each fld As Outlook.Folder In rtFld.Folders
-                If fld.Name = "Inbox" Then
-                    For Each subFld As Outlook.Folder In fld.Folders
-                        If subFld.Name.Substring(0, 4) = proj Then
-                            'if the first four characters of the folder name
-                            'match the project number then we have found our folder
-
-                            retVal = subFld
-                            Exit For
-
-                        End If
-                    Next
-                End If
-            Next
-
-        Else
-            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
+        If Not (IsNothing(aslSentMailFolder)) Then
+            retVal = aslSentMailFolder
         End If
 
         Return retVal
     End Function
 
-    ''' <summary>
-    ''' creates a new project folder in the inbox and returns the reference.
-    ''' </summary>
-    ''' <param name="proj"></param>
-    ''' <returns></returns>
-    Public Function Create_ProjectFolder_In_ASLStoreInbox(ByVal proj As String) As Outlook.Folder
-        Dim retVal As Outlook.Folder = Nothing
+    Private Sub Enumerate_SentItemsFolder(ByVal oFolder As Outlook.Folder)
+        Dim folders As Outlook.Folders = Nothing
+        Dim Folder As Outlook.Folder = Nothing
+        Dim foldercount As Integer = Nothing
 
-        If IsNothing(ASL_Tools.aslStore) Then
-            ASL_Tools.Get_ASL_Store()
-        End If
-
-        If Not (IsNothing(ASL_Tools.aslStore)) Then
-            'if the store is in memory then look at the root of the folder
-            'then select the inbox folder and get the sub folders in it.
-
-            Dim rtFld As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
-
-            For Each fld As Outlook.Folder In rtFld.Folders
-                If fld.Name = "Inbox" Then
-                    retVal = fld.Folders.Add(proj)
-                    Exit For
+        On Error Resume Next
+        folders = oFolder.Folders
+        foldercount = folders.Count
+        'Check if there are any folders below oFolder 
+        If foldercount Then
+            For Each Folder In folders
+                'Debug.Print(Folder.FolderPath)
+                If Folder.Name = "Sent Mail" Then
+                    aslSentMailFolder = Folder
+                    Exit Sub
                 End If
-            Next
 
-        Else
-            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
-        End If
-
-        Return retVal
-    End Function
-
-    ''' <summary>
-    ''' Checks to see if the ProjectFolderSend exists a passed outlook folder reference
-    ''' </summary>
-    ''' <param name="pf"></param>
-    ''' <returns></returns>
-    Public Function Get_ProjectFolderSent(ByVal pf As Outlook.Folder) As Outlook.Folder
-        Dim retVal As Outlook.Folder = Nothing
-
-        If Not (IsNothing(pf)) Then
-            For Each fld As Outlook.Folder In pf.Folders
-                If fld.Name = "SENT" Then
-                    retVal = fld
-                    Exit For
-                End If
+                Enumerate_SentItemsFolder(Folder)
             Next
         End If
-
-        Return retVal
-    End Function
-
-    ''' <summary>
-    ''' create sent folder to a ProjectFolder passed by the user
-    ''' check to see if one exists first.
-    ''' </summary>
-    ''' <param name="pf"></param>
-    ''' <returns></returns>
-    Public Function Create_ProjectFolderSent(ByVal pf As Outlook.Folder) As Outlook.Folder
-        Dim fld As Outlook.Folder = Nothing
-
-        fld = pf.Folders.Add("SENT")
-
-        Return fld
-    End Function
-
-    ''' <summary>
-    ''' every email in outlook that the program moves to a project will have
-    ''' a custom message property called messageKeyTag
-    ''' it is a string containing the project number the date stampp and the message type
-    ''' (1906)(2018-01-01-1234-45-45)(re)
-    ''' </summary>
-    ''' <param name="maIt"></param>
-    ''' <param name="st"></param>
-    Public Sub Set_StampProperty(maIt As Outlook.MailItem, st As String)
-        Dim fnd As Boolean = False
-
-        For Each upro As Outlook.UserProperty In maIt.UserProperties
-            If upro.Name = "messageKeyTag" Then
-                fnd = True
-                Exit For
-            End If
-        Next
-
-        If fnd = False Then
-            maIt.UserProperties.Add("messageKeyTag", Outlook.OlUserPropertyType.olText, False, Outlook.OlFormatText.olFormatTextText)
-        End If
-
-        maIt.UserProperties.Item("messageKeyTag").Value = st
-
-    End Sub
-
-    ''' <summary>
-    ''' every email in outlook that the program moves to a project will have
-    ''' a custom message property called messageKeyTag
-    ''' it is a string containing the project number the date stampp and the message type
-    ''' (1906)(2018-01-01-1234-45-45)(re)
-    ''' </summary>
-    ''' <param name="maIt"></param>
-    ''' <returns></returns>
-    Public Function Get_StampProperty(maIt As Outlook.MailItem) As ASLmessageProperties
-        Dim retVal As ASLmessageProperties = New ASLmessageProperties
-        Dim keyVal As String = ""
-
-        For Each upro As Outlook.UserProperty In maIt.UserProperties
-            If upro.Name = "messageKeyTag" Then
-                keyVal = upro.Value
-                Exit For
-            End If
-        Next
-
-        If Not (keyVal = "") Then
-            Dim ar = keyVal.Split(New Char() {"("c})
-            If ar.Length = 4 Then
-                retVal.proj = ar(1).Substring(0, ar(1).Length - 1)
-                retVal.timestamp = ar(2).Substring(0, ar(2).Length - 1)
-                retVal.messagetype = ar(3).Substring(0, ar(3).Length - 1)
-            End If
-        End If
-
-        Return retVal
-    End Function
-
-    ''' <summary>
-    ''' used to delete a message file when moving an email.
-    ''' called from form_emailmove
-    ''' </summary>
-    ''' <param name="msgProp"></param>
-    ''' <param name="fld"></param>
-    Public Sub remove_ASLMessage(msgProp As ASLmessageProperties, fld As System.IO.DirectoryInfo)
-
-        Dim st As String = "(" & msgProp.proj & ")(" & msgProp.timestamp & ")(" & msgProp.messagetype & ")"
-        'MsgBox(System.IO.Directory.Exists(fld.FullName))
-        Dim fl = (fld.FullName & "\" & st & ".msg")
-
-        If System.IO.File.Exists(fl) Then
-            System.IO.File.Delete(fl)
-        End If
-
     End Sub
 
     ''' <summary>
@@ -489,10 +192,204 @@ Module ASL_Tools
         Globals.Ribbons.ASL_Ribbon.button_recordEmail.Enabled = False
 
     End Sub
-End Module
 
-Public Class ASLmessageProperties
-    Public proj As String
-    Public timestamp As String
-    Public messagetype As String
-End Class
+    Public Sub GetOfflineMessages()
+        Dim frm As form_process = New form_process
+
+        frm.Show()
+
+        ASL_Tools.offlineFileCount = 0
+
+        ASL_Tools.msList = New List(Of Outlook.MailItem)
+
+        If IsNothing(ASL_Tools.aslStore) Then
+            ASL_Tools.Get_ASL_Store()
+        End If
+
+        If IsNothing(ASL_Tools.aslStore) Then
+            MsgBox("Unable to get ASL Store.", vbCritical, "Error")
+            Exit Sub
+        End If
+
+        Dim fldRoot As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
+        Dim fldIn As Outlook.Folder = Nothing
+
+        For Each fld As Outlook.Folder In fldRoot.Folders
+            If fld.Name = "Inbox" Then
+                fldIn = fld
+                Exit For
+            End If
+        Next
+
+        ASL_Tools.Enumerate_InboxFolder(fldIn)
+
+        frm.Close()
+    End Sub
+
+    Private Sub Enumerate_InboxFolder(ByVal oFolder As Outlook.Folder)
+        Dim folders As Outlook.Folders = Nothing
+        Dim Folder As Outlook.Folder = Nothing
+        Dim foldercount As Integer = Nothing
+
+        On Error Resume Next
+        folders = oFolder.Folders
+        foldercount = folders.Count
+        'Check if there are any folders below oFolder 
+        If foldercount Then
+            For Each Folder In folders
+                'Debug.Print(Folder.FolderPath)
+                For Each msIt As Outlook.MailItem In Folder.Items
+
+                    If (TypeOf msIt Is Outlook.MailItem) Then
+                        'put the mail item into the custom class mail item
+                        Dim ma As class_MailItemTools = New class_MailItemTools
+                        ma.maItem = msIt
+                        Dim sto As String = ma.msgProp.Get_StoredProperty(ma.maItem)
+                        If sto = "False" Then
+                            ASL_Tools.offlineFileCount = ASL_Tools.offlineFileCount + 1
+                            ASL_Tools.msList.Add(msIt)
+                        End If
+                    End If
+                Next
+                Enumerate_InboxFolder(Folder)
+            Next
+        End If
+    End Sub
+
+    Public Sub ProcessOfflineMessages()
+        'for each file that is offline. push them to the server.
+        If ASL_Tools.networkReady = True Then
+            For Each obj As Outlook.MailItem In ASL_Tools.msList
+                If (TypeOf obj Is Outlook.MailItem) Then
+                    'put the mail item into the custom class mail item
+                    Dim ma As class_MailItemTools = New class_MailItemTools
+                    ma.maItem = obj
+
+                    Try
+                        'get the other custom properties of the message.
+                        ma.msgProp.Get_AllProperties(ma.maItem)
+                        If ma.msgProp.stored = False Then
+                            Try
+                                ma.Put_MailItem_OnNetwork()
+                            Catch ex As Exception
+                                MsgBox("ProcessOffline.NetworkStore:" & ex.Message)
+                            End Try
+                        End If
+                    Catch ex As Exception
+                        MsgBox("ProcessOffline.properties:" & ex.Message)
+                    End Try
+
+                End If
+            Next
+        End If
+
+        ASL_Tools.GetOfflineMessages()
+
+    End Sub
+
+    Public Sub SaveMessage(ma As class_MailItemTools, proj As String)
+        Dim ret As Outlook.MailItem = Nothing
+
+        Try
+            ma.Get_PropertyAccessorObj()
+            'get the other custom properties of the message.
+            'ma.msgProp.Get_AllProperties(ma.maItem)
+
+            'ma.msgProp.Set_ProjectProperty(proj, ma.maItem)
+            Dim st As String = ma.msgProp.Format_DateTimeStamp(ma.maItem)
+            ma.timestamp = st
+            ma.messagetype = "re"
+            ma.processed = "False"
+            ma.stored = "False"
+
+            ma.Set_PropertyAccessorObj()
+
+            'ma.msgProp.Set_TimeStampProperty(st, ma.maItem)
+            'ma.msgProp.Set_MessageTypeProperty("re", ma.maItem)
+            'ma.msgProp.Set_ProcessedProperty("False", ma.maItem)
+            'ma.msgProp.Set_StoredProperty("False", ma.maItem)
+
+            Try
+                ret = ma.Store_MailItem_OnStore()
+                If Not (IsNothing(ret)) Then
+                    ma.Put_MailItem_OnNetwork()
+                End If
+            Catch ex As Exception
+                MsgBox("Record.NetworkStore:" & ex.Message)
+            End Try
+        Catch ex As Exception
+            MsgBox("Record.properties:" & ex.Message)
+        End Try
+
+    End Sub
+
+    Public Sub ProcessSentMessages()
+        'get the sent message folder
+        'for each message that was sent in the last 2 weeks look at the properties.
+        'look for messages with a category "Project=0000" these have need to be recorded.
+        'if a message needs to be recorded then get all the message properties
+        'save it to the message store under the job number.
+        'save it to the network under the job number.
+
+        Dim sDate As Date = Now.AddDays(-14)
+        Dim searchCriteria As String = "[ReceivedTime]>'" & Format(sDate, "M/d/yyyy H:mm") & "'"
+        Dim cat As String = ""              'category
+        Dim resultItem As Object = Nothing
+
+        'Apply filter. use the receivedtime of the email
+        resultItem = ASL_Tools.aslSentMailFolder.Items.Restrict(searchCriteria)
+
+        For Each obj As Object In resultItem
+            If (TypeOf obj Is Outlook.MailItem) Then
+                'put the mail item into the custom class mail item
+                Dim ma As class_MailItemTools = New class_MailItemTools
+                ma.maItem = obj
+
+                'try and get the custom category of the mail item that was stored when sent.
+                Try
+                    cat = ma.msgProp.Get_Category(ma.maItem)
+                    If cat.Length > 8 Then
+                        If cat.Substring(0, 7) = "Project" Then
+                            'if the project category key word is found then
+                            'get the other custom properties of the message.
+                            ma.msgProp.Get_AllProperties(ma.maItem)
+
+                            Dim projnum As String = cat.Substring(cat.IndexOf("=") + 1, cat.Length - 8)
+                            ma.msgProp.Set_ProjectProperty(projnum, ma.maItem)
+
+                            Dim st As String = ma.msgProp.Format_DateTimeStamp(ma.maItem)
+                            ma.msgProp.Set_TimeStampProperty(st, ma.maItem)
+
+                            ma.msgProp.Set_MessageTypeProperty("se", ma.maItem)
+                            ma.msgProp.Set_ProcessedProperty(False, ma.maItem)
+                            ma.msgProp.Set_StoredProperty(False, ma.maItem)
+
+                            'set the category back to nothing so that it doesnt get
+                            'added to the directory a second time.
+                            ma.msgProp.Set_Category("", ma.maItem)
+
+                            Dim accessorProp As String = ma.msgProp.Get_PropertyAccessorObj(ma.maItem)
+                            Debug.Print("Accessor:" & accessorProp)
+                            'once all the mail properties have been set
+                            'try to process the items.
+                            'if it fails then reset the processed property
+                            Try
+                                ma.Store_MailItem_OnStore()
+                                ma.Put_MailItem_OnNetwork()
+                                'ASL_Tools.msList.Add(ma)
+                            Catch ex As Exception
+                                MsgBox("MailProcess.MailStore:" & ex.Message)
+                                ma.msgProp.Set_Category(cat, ma.maItem)
+                            End Try
+
+                        End If
+                    End If
+                Catch ex As Exception
+                    MsgBox("MailProcess.Category:" & ex.Message)
+                End Try
+
+            End If
+        Next
+
+    End Sub
+End Module

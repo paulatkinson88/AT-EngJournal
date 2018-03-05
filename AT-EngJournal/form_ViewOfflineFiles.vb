@@ -3,7 +3,8 @@
 Public Class form_ViewOfflineFiles
     Private Sub form_ViewOfflineFiles_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         label_status.Text = "Getting Files"
-        ASL_Tools.Get_OffLineFileCount()
+        ASL_Tools.GetOfflineMessages()
+
         label_status.Text = "Display Files"
 
         For Each itm As Outlook.MailItem In ASL_Tools.msList
@@ -14,6 +15,7 @@ Public Class form_ViewOfflineFiles
             Dim lstItm As ListViewItem = New ListViewItem(st)
             ListView1.Items.Add(lstItm)
         Next
+
         label_status.Text = "Idle"
         label_count.Text = ASL_Tools.msList.Count.ToString
     End Sub

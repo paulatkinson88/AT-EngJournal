@@ -88,80 +88,10 @@ AT-EngJournal
 <member name="M:AT_EngJournal.ThisRibbonCollection.#ctor(Microsoft.Office.Tools.Ribbon.RibbonFactory)">
 
 </member>
-<member name="M:AT_EngJournal.ASL_Tools.Check_For_ProjectDirectoryEngJournal(System.String,System.String)">
- <summary>
- routine used for network storage.
- check the project directory exists.
- </summary>
- <param name="pro"></param>
- <returns></returns>
-</member>
 <member name="M:AT_EngJournal.ASL_Tools.Get_ASL_Store">
  <summary>
  Finds the asl store in all the stores on the outlook application session
  </summary>
-</member>
-<member name="M:AT_EngJournal.ASL_Tools.Get_ASL_Store_Folders">
- <summary>
- Test function not used.
- </summary>
-</member>
-<member name="M:AT_EngJournal.ASL_Tools.Get_ProjectFolder_In_ASLStoreInbox(System.String)">
- <summary>
- Finds the project folder in the ASL store and returns a reference to it
- </summary>
- <param name="proj"></param>
- <returns></returns>
-</member>
-<member name="M:AT_EngJournal.ASL_Tools.Create_ProjectFolder_In_ASLStoreInbox(System.String)">
- <summary>
- creates a new project folder in the inbox and returns the reference.
- </summary>
- <param name="proj"></param>
- <returns></returns>
-</member>
-<member name="M:AT_EngJournal.ASL_Tools.Get_ProjectFolderSent(Microsoft.Office.Interop.Outlook.Folder)">
- <summary>
- Checks to see if the ProjectFolderSend exists a passed outlook folder reference
- </summary>
- <param name="pf"></param>
- <returns></returns>
-</member>
-<member name="M:AT_EngJournal.ASL_Tools.Create_ProjectFolderSent(Microsoft.Office.Interop.Outlook.Folder)">
- <summary>
- create sent folder to a ProjectFolder passed by the user
- check to see if one exists first.
- </summary>
- <param name="pf"></param>
- <returns></returns>
-</member>
-<member name="M:AT_EngJournal.ASL_Tools.Set_StampProperty(Microsoft.Office.Interop.Outlook.MailItem,System.String)">
- <summary>
- every email in outlook that the program moves to a project will have
- a custom message property called messageKeyTag
- it is a string containing the project number the date stampp and the message type
- (1906)(2018-01-01-1234-45-45)(re)
- </summary>
- <param name="maIt"></param>
- <param name="st"></param>
-</member>
-<member name="M:AT_EngJournal.ASL_Tools.Get_StampProperty(Microsoft.Office.Interop.Outlook.MailItem)">
- <summary>
- every email in outlook that the program moves to a project will have
- a custom message property called messageKeyTag
- it is a string containing the project number the date stampp and the message type
- (1906)(2018-01-01-1234-45-45)(re)
- </summary>
- <param name="maIt"></param>
- <returns></returns>
-</member>
-<member name="M:AT_EngJournal.ASL_Tools.remove_ASLMessage(AT_EngJournal.ASLmessageProperties,System.IO.DirectoryInfo)">
- <summary>
- used to delete a message file when moving an email.
- called from form_emailmove
- </summary>
- <param name="msgProp"></param>
- <param name="fld"></param>
 </member>
 <member name="M:AT_EngJournal.ASL_Tools.get_discipline">
  <summary>
@@ -185,6 +115,67 @@ AT-EngJournal
  <summary>
  disables everyting to do with the registry
  </summary>
+</member>
+<member name="M:AT_EngJournal.class_MailProperties.find_property(System.String,Microsoft.Office.Interop.Outlook.MailItem)">
+ <summary>
+ find the property in a mail item
+ if it isnt found then create it
+ </summary>
+ <param name="prop"></param>
+ <returns></returns>
+</member>
+<member name="M:AT_EngJournal.class_MailProperties.Set_ProjectProperty(System.String,Microsoft.Office.Interop.Outlook.MailItem)">
+ <summary>
+ all messages use this
+ this is the project number associated to the message.
+ </summary>
+ <param name="st"></param>
+ <param name="maIt"></param>
+</member>
+<member name="M:AT_EngJournal.class_MailProperties.Set_TimeStampProperty(System.String,Microsoft.Office.Interop.Outlook.MailItem)">
+ <summary>
+ all messages use this
+ this is the receivedtime value of a message
+ </summary>
+ <param name="st"></param>
+ <param name="maIt"></param>
+</member>
+<member name="M:AT_EngJournal.class_MailProperties.Set_MessageTypeProperty(System.String,Microsoft.Office.Interop.Outlook.MailItem)">
+ <summary>
+ all messages use this
+ shows if the message is 'se' sent or 're' received
+ </summary>
+ <param name="st"></param>
+ <param name="maIt"></param>
+</member>
+<member name="M:AT_EngJournal.class_MailProperties.Set_ProcessedProperty(System.String,Microsoft.Office.Interop.Outlook.MailItem)">
+ <summary>
+ Used to know if sent mail has been processed from the 
+ sent mail items mail box.
+ True or False
+ </summary>
+ <param name="st"></param>
+ <param name="maIt"></param>
+</member>
+<member name="M:AT_EngJournal.class_MailProperties.Set_StoredProperty(System.String,Microsoft.Office.Interop.Outlook.MailItem)">
+ <summary>
+ all messages use this. 
+ shows if the message has been stored on the server.
+ True or False
+ </summary>
+ <param name="st"></param>
+ <param name="maIt"></param>
+</member>
+<member name="M:AT_EngJournal.class_MailProperties.Set_Category(System.String,Microsoft.Office.Interop.Outlook.MailItem)">
+ <summary>
+ this is used by sent mail items
+ set the category value of the message item.
+ when an email is sentout set "Project=0000" as acategory
+ append the project number to the back of the name
+ retrieve this at a later date to process the message from the sent items
+ </summary>
+ <param name="st"></param>
+ <param name="maIt"></param>
 </member>
 <member name="T:AT_EngJournal.ThisAddIn">
 

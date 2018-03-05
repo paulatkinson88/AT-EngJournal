@@ -37,7 +37,7 @@ Partial Class form_emailMove
         '
         Me.button_skip.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.button_skip.Image = Global.AT_EngJournal.My.Resources.Resources.dialog_close_2
-        Me.button_skip.Location = New System.Drawing.Point(365, 105)
+        Me.button_skip.Location = New System.Drawing.Point(410, 105)
         Me.button_skip.Name = "button_skip"
         Me.button_skip.Size = New System.Drawing.Size(104, 42)
         Me.button_skip.TabIndex = 11
@@ -55,7 +55,7 @@ Partial Class form_emailMove
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Location = New System.Drawing.Point(8, 10)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(469, 89)
+        Me.Panel1.Size = New System.Drawing.Size(506, 89)
         Me.Panel1.TabIndex = 10
         '
         'PictureBox1
@@ -109,7 +109,7 @@ Partial Class form_emailMove
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.button_skip
-        Me.ClientSize = New System.Drawing.Size(482, 151)
+        Me.ClientSize = New System.Drawing.Size(526, 151)
         Me.ControlBox = False
         Me.Controls.Add(Me.button_skip)
         Me.Controls.Add(Me.Panel1)

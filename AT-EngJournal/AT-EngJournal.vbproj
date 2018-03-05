@@ -213,6 +213,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ASL_Tools.vb" />
+    <Compile Include="class_MailProperties.vb" />
+    <Compile Include="class_MailItemTools.vb" />
+    <Compile Include="class_StoreTools.vb" />
     <Compile Include="form_EmailMove.Designer.vb">
       <DependentUpon>form_EmailMove.vb</DependentUpon>
     </Compile>
@@ -229,6 +232,12 @@
       <DependentUpon>form_EmailSend.vb</DependentUpon>
     </Compile>
     <Compile Include="form_EmailSend.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form_process.Designer.vb">
+      <DependentUpon>form_process.vb</DependentUpon>
+    </Compile>
+    <Compile Include="form_process.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="form_setDiscipline.Designer.vb">
@@ -264,6 +273,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="form_EmailSend.resx">
       <DependentUpon>form_EmailSend.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form_process.resx">
+      <DependentUpon>form_process.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="form_setDiscipline.resx">
       <DependentUpon>form_setDiscipline.vb</DependentUpon>
@@ -327,6 +339,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\documentation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tempcode.txt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

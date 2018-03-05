@@ -72,14 +72,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AT-EngJournal.dll" size="104448">
-      <assemblyIdentity name="AT-EngJournal" version="0.0.2.45" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AT-EngJournal.dll" size="112640">
+      <assemblyIdentity name="AT-EngJournal" version="0.0.3.93" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>BxXv/cVPsLbdbdgvuITcq8lx1Fe3KOIvbaJGcGtGfSU=</dsig:DigestValue>
+        <dsig:DigestValue>ac/wNbkyDQv2jLTihxL2QFhLnGNFX9hW39aR7eNC0TY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -107,11 +107,20 @@
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="tempcode.txt" size="4044">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zM2/xA5M7sdNmafO/qhf6VTFa3PkMWFcuggdJcVk7ug=</dsig:DigestValue>
+    </hash>
+  </file>
   <vstav3:addIn xmlns:vstav3="urn:schemas-microsoft-com:vsta.v3">
     <vstav3:entryPointsCollection>
       <vstav3:entryPoints>
         <vstav3:entryPoint class="AT_EngJournal.ThisAddIn">
-          <assemblyIdentity name="AT-EngJournal" version="0.0.2.45" language="neutral" processorArchitecture="msil" />
+          <assemblyIdentity name="AT-EngJournal" version="0.0.3.93" language="neutral" processorArchitecture="msil" />
         </vstav3:entryPoint>
       </vstav3:entryPoints>
     </vstav3:entryPointsCollection>
@@ -123,11 +132,11 @@
             <vstov4:friendlyName>AT-EngJournal</vstov4:friendlyName>
             <vstov4:description>AT-EngJournal</vstov4:description>
             <vstov4.1:ribbonTypes xmlns:vstov4.1="urn:schemas-microsoft-com:vsto.v4.1">
-              <vstov4.1:ribbonType name="AT_EngJournal.ASL_Ribbon, AT-EngJournal, Version=0.0.2.45, Culture=neutral, PublicKeyToken=null" />
+              <vstov4.1:ribbonType name="AT_EngJournal.ASL_Ribbon, AT-EngJournal, Version=0.0.3.93, Culture=neutral, PublicKeyToken=null" />
             </vstov4.1:ribbonTypes>
           </vstov4:appAddIn>
         </vstov4:customization>
       </vstov4:customizations>
     </vstav3:application>
   </vstav3:addIn>
-<publisherIdentity name="CN=DESKTOP-LFJCCM4\paul" issuerKeyHash="13783936b87dd337e1dee725b7a1d554d4fbfd16" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>tTm1XjGjlanXT8BEVntOZSSBOPidSW9zM2UoTMV2yys=</DigestValue></Reference></SignedInfo><SignatureValue>wXQhpL38vLKtrfO/WuEFOVlVq8GZt8gD0QcUhPi4bMdmPzwffkGnAAjc9p8XAhkbiAbgzV+ofxljH4QBIuQdIjMU+D4ji27ZLWGQp+ysYfxwmzhfQg/J6tg3F7UAVGgYTe0Xqsrmm/Ye5mWNj9X0FdQwhOpPhS2u8v0wxn+cpR8=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>y6hecd+ELPWXJBIqOqVJDhqQmoVCxsnkhff2M0WkTu3U2UsWxyMjrFMpL2Q7DEApGwijRCDVmcD7ICoU6rmsLHAcDVVmoreue2sAtu0roiWV3c77hh7qmViu4RkGm5WzL4/DobAxqMxmA7ldMP6ojh02Ex9hiewLRWpWQUW9HkU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="2bcb76c54c286533736f499df8388124654e7b5644c04fd7a995a3315eb539b5" Description="" Url=""><as:assemblyIdentity name="AT-EngJournal.dll" version="0.1.0.3" publicKeyToken="7e2f21c0a707f95d" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-LFJCCM4\paul</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>wZOwLzxZXeNl6gW8q1/8kpkqHh5pqrIZ9jeJp35gbAg=</DigestValue></Reference></SignedInfo><SignatureValue>AJwnoytUbUpzqQOio9GqaI0wTBGEFUm4ql7/pqlCimLfQUZ+vLurJHs4oXrZnsXyGYy32W1Wz0UDAao4bhnAH1T/sU2Ey/1eFQtnR6yfZg8RbZyxYqGbkeWZm7pDHaIfmDvWz/Y+uhmRiCoLv3wCO76xKoAEREVlzByHDKY3EDg=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>y6hecd+ELPWXJBIqOqVJDhqQmoVCxsnkhff2M0WkTu3U2UsWxyMjrFMpL2Q7DEApGwijRCDVmcD7ICoU6rmsLHAcDVVmoreue2sAtu0roiWV3c77hh7qmViu4RkGm5WzL4/DobAxqMxmA7ldMP6ojh02Ex9hiewLRWpWQUW9HkU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB6TCCAVKgAwIBAgIQVG1LcsyeCplHOZB1OVbVnDANBgkqhkiG9w0BAQsFADAzMTEwLwYDVQQDHigARABFAFMASwBUAE8AUAAtAEwARgBKAEMAQwBNADQAXABwAGEAdQBsMB4XDTE4MDExMTE5MTk1MFoXDTE5MDExMjAxMTk1MFowMzExMC8GA1UEAx4oAEQARQBTAEsAVABPAFAALQBMAEYASgBDAEMATQA0AFwAcABhAHUAbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAy6hecd+ELPWXJBIqOqVJDhqQmoVCxsnkhff2M0WkTu3U2UsWxyMjrFMpL2Q7DEApGwijRCDVmcD7ICoU6rmsLHAcDVVmoreue2sAtu0roiWV3c77hh7qmViu4RkGm5WzL4/DobAxqMxmA7ldMP6ojh02Ex9hiewLRWpWQUW9HkUCAwEAATANBgkqhkiG9w0BAQsFAAOBgQCN0bNCWOv8hIBvEsydEaJqGvizUHeKdHFk3yUUc6e31pwzgvcpL0dA9J/ZvLsKVZh/MOFgRCloqoChnc7/7ctWeR9n6hPHb4w8/YxsT62+pQr88uuy5x/Ysu9sz7zcXyqAyBBrfmFcz5UmWvlODnLoVc+ZjcQKxT2hKWmJHFE8lg==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+<publisherIdentity name="CN=DESKTOP-LFJCCM4\paul" issuerKeyHash="13783936b87dd337e1dee725b7a1d554d4fbfd16" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>FHTVjx5nKBP3N0IN+tq5e3me/YwRUnSTY8hhncDftmw=</DigestValue></Reference></SignedInfo><SignatureValue>fc6v9ZRaYo8i/PiwcUO5Q9XjmBc24ttDMv75Tnyyb1rrj6fSlpi2Vyh01yWECFGZoIWwxz+I7qNnKRO+ywWov97fuFIKRof4n0EGaZR5tCssVylOLS5N1V8h/fDOgM32m/Uyio5I9lDxSMHIuKZsZ+oFH8Z66h0xpIKPmheNYw4=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>y6hecd+ELPWXJBIqOqVJDhqQmoVCxsnkhff2M0WkTu3U2UsWxyMjrFMpL2Q7DEApGwijRCDVmcD7ICoU6rmsLHAcDVVmoreue2sAtu0roiWV3c77hh7qmViu4RkGm5WzL4/DobAxqMxmA7ldMP6ojh02Ex9hiewLRWpWQUW9HkU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="6cb6dfc09d61c863937452118cfd9e797bb9dafa0d4237f71328671e8fd57414" Description="" Url=""><as:assemblyIdentity name="AT-EngJournal.dll" version="0.1.0.3" publicKeyToken="7e2f21c0a707f95d" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-LFJCCM4\paul</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>T4eKrpD+samtJkkcdCZPnSuTSaAEOQ3RM92pCcAX6xc=</DigestValue></Reference></SignedInfo><SignatureValue>icYCmU1+pAgIh2x/SVsBoHNBXb2kt/3h+mIgYqKyi/goVBALPKKfImC5k9TbdZ/P3mwtx+UCS5iudPOsG8HGMwYdLJWC0TavOBbhxIa/3oxgScCIVoemgRdRhLsC2Cjfl1cwblofXD+kAnNNX5yxMaYo9wwejufHlc5s6kyM1j4=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>y6hecd+ELPWXJBIqOqVJDhqQmoVCxsnkhff2M0WkTu3U2UsWxyMjrFMpL2Q7DEApGwijRCDVmcD7ICoU6rmsLHAcDVVmoreue2sAtu0roiWV3c77hh7qmViu4RkGm5WzL4/DobAxqMxmA7ldMP6ojh02Ex9hiewLRWpWQUW9HkU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB6TCCAVKgAwIBAgIQVG1LcsyeCplHOZB1OVbVnDANBgkqhkiG9w0BAQsFADAzMTEwLwYDVQQDHigARABFAFMASwBUAE8AUAAtAEwARgBKAEMAQwBNADQAXABwAGEAdQBsMB4XDTE4MDExMTE5MTk1MFoXDTE5MDExMjAxMTk1MFowMzExMC8GA1UEAx4oAEQARQBTAEsAVABPAFAALQBMAEYASgBDAEMATQA0AFwAcABhAHUAbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAy6hecd+ELPWXJBIqOqVJDhqQmoVCxsnkhff2M0WkTu3U2UsWxyMjrFMpL2Q7DEApGwijRCDVmcD7ICoU6rmsLHAcDVVmoreue2sAtu0roiWV3c77hh7qmViu4RkGm5WzL4/DobAxqMxmA7ldMP6ojh02Ex9hiewLRWpWQUW9HkUCAwEAATANBgkqhkiG9w0BAQsFAAOBgQCN0bNCWOv8hIBvEsydEaJqGvizUHeKdHFk3yUUc6e31pwzgvcpL0dA9J/ZvLsKVZh/MOFgRCloqoChnc7/7ctWeR9n6hPHb4w8/YxsT62+pQr88uuy5x/Ysu9sz7zcXyqAyBBrfmFcz5UmWvlODnLoVc+ZjcQKxT2hKWmJHFE8lg==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

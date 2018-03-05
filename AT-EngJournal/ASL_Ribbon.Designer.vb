@@ -51,32 +51,36 @@
         Me.label = Me.Factory.CreateRibbonLabel
         Me.Label2 = Me.Factory.CreateRibbonLabel
         Me.label_offlinefilecount = Me.Factory.CreateRibbonLabel
+        Me.Group5 = Me.Factory.CreateRibbonGroup
+        Me.Group6 = Me.Factory.CreateRibbonGroup
+        Me.label_discipline = Me.Factory.CreateRibbonLabel
         Me.Group2 = Me.Factory.CreateRibbonGroup
-        Me.Button2 = Me.Factory.CreateRibbonButton
-        Me.Button3 = Me.Factory.CreateRibbonButton
+        Me.Label3 = Me.Factory.CreateRibbonLabel
         Me.Group4 = Me.Factory.CreateRibbonGroup
         Me.Box3 = Me.Factory.CreateRibbonBox
         Me.Label1 = Me.Factory.CreateRibbonLabel
         Me.label_version = Me.Factory.CreateRibbonLabel
-        Me.label_discipline = Me.Factory.CreateRibbonLabel
-        Me.button_discipline = Me.Factory.CreateRibbonButton
-        Me.Group5 = Me.Factory.CreateRibbonGroup
         Me.Button1 = Me.Factory.CreateRibbonButton
         Me.button_OfflineFilesCount = Me.Factory.CreateRibbonButton
         Me.button_pushOfflineFilestoServer = Me.Factory.CreateRibbonButton
         Me.button_viewOfflineFiles = Me.Factory.CreateRibbonButton
+        Me.Button2 = Me.Factory.CreateRibbonButton
         Me.button_recordEmail = Me.Factory.CreateRibbonButton
         Me.button_MoveEmail = Me.Factory.CreateRibbonButton
         Me.button_getUserProperties = Me.Factory.CreateRibbonButton
+        Me.button_discipline = Me.Factory.CreateRibbonButton
+        Me.Button3 = Me.Factory.CreateRibbonButton
+        Me.Button4 = Me.Factory.CreateRibbonButton
         Me.Tab1.SuspendLayout()
         Me.Group1.SuspendLayout()
         Me.Box1.SuspendLayout()
         Me.Group3.SuspendLayout()
         Me.Box2.SuspendLayout()
+        Me.Group5.SuspendLayout()
+        Me.Group6.SuspendLayout()
         Me.Group2.SuspendLayout()
         Me.Group4.SuspendLayout()
         Me.Box3.SuspendLayout()
-        Me.Group5.SuspendLayout()
         Me.SuspendLayout()
         '
         'Tab1
@@ -85,6 +89,7 @@
         Me.Tab1.Groups.Add(Me.Group1)
         Me.Tab1.Groups.Add(Me.Group3)
         Me.Tab1.Groups.Add(Me.Group5)
+        Me.Tab1.Groups.Add(Me.Group6)
         Me.Tab1.Groups.Add(Me.Group2)
         Me.Tab1.Groups.Add(Me.Group4)
         Me.Tab1.Label = "ASL"
@@ -146,24 +151,39 @@
         Me.label_offlinefilecount.Label = "0"
         Me.label_offlinefilecount.Name = "label_offlinefilecount"
         '
+        'Group5
+        '
+        Me.Group5.Items.Add(Me.Button2)
+        Me.Group5.Items.Add(Me.button_recordEmail)
+        Me.Group5.Items.Add(Me.button_MoveEmail)
+        Me.Group5.Items.Add(Me.button_getUserProperties)
+        Me.Group5.Label = "Record"
+        Me.Group5.Name = "Group5"
+        '
+        'Group6
+        '
+        Me.Group6.Items.Add(Me.button_discipline)
+        Me.Group6.Items.Add(Me.label_discipline)
+        Me.Group6.Label = "Discipline"
+        Me.Group6.Name = "Group6"
+        '
+        'label_discipline
+        '
+        Me.label_discipline.Label = "-"
+        Me.label_discipline.Name = "label_discipline"
+        '
         'Group2
         '
-        Me.Group2.Items.Add(Me.Button2)
         Me.Group2.Items.Add(Me.Button3)
+        Me.Group2.Items.Add(Me.Button4)
+        Me.Group2.Items.Add(Me.Label3)
         Me.Group2.Label = "Test"
         Me.Group2.Name = "Group2"
         '
-        'Button2
+        'Label3
         '
-        Me.Button2.Enabled = False
-        Me.Button2.Label = "Button2"
-        Me.Button2.Name = "Button2"
-        '
-        'Button3
-        '
-        Me.Button3.Enabled = False
-        Me.Button3.Label = "Button3"
-        Me.Button3.Name = "Button3"
+        Me.Label3.Label = "Label3"
+        Me.Label3.Name = "Label3"
         '
         'Group4
         '
@@ -187,26 +207,6 @@
         '
         Me.label_version.Label = "-"
         Me.label_version.Name = "label_version"
-        '
-        'label_discipline
-        '
-        Me.label_discipline.Label = "-"
-        Me.label_discipline.Name = "label_discipline"
-        '
-        'button_discipline
-        '
-        Me.button_discipline.Label = "Change Discipline"
-        Me.button_discipline.Name = "button_discipline"
-        '
-        'Group5
-        '
-        Me.Group5.Items.Add(Me.button_recordEmail)
-        Me.Group5.Items.Add(Me.button_MoveEmail)
-        Me.Group5.Items.Add(Me.button_getUserProperties)
-        Me.Group5.Items.Add(Me.button_discipline)
-        Me.Group5.Items.Add(Me.label_discipline)
-        Me.Group5.Label = "Record"
-        Me.Group5.Name = "Group5"
         '
         'Button1
         '
@@ -240,6 +240,14 @@
         Me.button_viewOfflineFiles.Name = "button_viewOfflineFiles"
         Me.button_viewOfflineFiles.ShowImage = True
         '
+        'Button2
+        '
+        Me.Button2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.Button2.Image = Global.AT_EngJournal.My.Resources.Resources.view_refresh_4
+        Me.Button2.Label = "Process SentMail"
+        Me.Button2.Name = "Button2"
+        Me.Button2.ShowImage = True
+        '
         'button_recordEmail
         '
         Me.button_recordEmail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
@@ -264,6 +272,21 @@
         Me.button_getUserProperties.Name = "button_getUserProperties"
         Me.button_getUserProperties.ShowImage = True
         '
+        'button_discipline
+        '
+        Me.button_discipline.Label = "Change Discipline"
+        Me.button_discipline.Name = "button_discipline"
+        '
+        'Button3
+        '
+        Me.Button3.Label = "Button3"
+        Me.Button3.Name = "Button3"
+        '
+        'Button4
+        '
+        Me.Button4.Label = "Button4"
+        Me.Button4.Name = "Button4"
+        '
         'ASL_Ribbon
         '
         Me.Name = "ASL_Ribbon"
@@ -279,14 +302,16 @@
         Me.Group3.PerformLayout()
         Me.Box2.ResumeLayout(False)
         Me.Box2.PerformLayout()
+        Me.Group5.ResumeLayout(False)
+        Me.Group5.PerformLayout()
+        Me.Group6.ResumeLayout(False)
+        Me.Group6.PerformLayout()
         Me.Group2.ResumeLayout(False)
         Me.Group2.PerformLayout()
         Me.Group4.ResumeLayout(False)
         Me.Group4.PerformLayout()
         Me.Box3.ResumeLayout(False)
         Me.Box3.PerformLayout()
-        Me.Group5.ResumeLayout(False)
-        Me.Group5.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -318,6 +343,9 @@
     Friend WithEvents button_MoveEmail As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents button_discipline As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents label_discipline As Microsoft.Office.Tools.Ribbon.RibbonLabel
+    Friend WithEvents Label3 As Microsoft.Office.Tools.Ribbon.RibbonLabel
+    Friend WithEvents Group6 As Microsoft.Office.Tools.Ribbon.RibbonGroup
+    Friend WithEvents Button4 As Microsoft.Office.Tools.Ribbon.RibbonButton
 End Class
 
 Partial Class ThisRibbonCollection
