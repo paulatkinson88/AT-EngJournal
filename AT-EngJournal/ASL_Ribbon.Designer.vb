@@ -43,16 +43,27 @@
     Private Sub InitializeComponent()
         Me.Tab1 = Me.Factory.CreateRibbonTab
         Me.Group1 = Me.Factory.CreateRibbonGroup
+        Me.Button1 = Me.Factory.CreateRibbonButton
         Me.Box1 = Me.Factory.CreateRibbonBox
         Me.label_con = Me.Factory.CreateRibbonLabel
         Me.label_connection = Me.Factory.CreateRibbonLabel
         Me.Group3 = Me.Factory.CreateRibbonGroup
+        Me.button_OfflineFilesCount = Me.Factory.CreateRibbonButton
+        Me.button_pushOfflineFilestoServer = Me.Factory.CreateRibbonButton
+        Me.button_viewOfflineFiles = Me.Factory.CreateRibbonButton
         Me.Box2 = Me.Factory.CreateRibbonBox
         Me.label = Me.Factory.CreateRibbonLabel
         Me.Label2 = Me.Factory.CreateRibbonLabel
         Me.label_offlinefilecount = Me.Factory.CreateRibbonLabel
         Me.Group5 = Me.Factory.CreateRibbonGroup
+        Me.Button2 = Me.Factory.CreateRibbonButton
+        Me.button_recordEmail = Me.Factory.CreateRibbonButton
+        Me.button_MoveEmail = Me.Factory.CreateRibbonButton
+        Me.Group7 = Me.Factory.CreateRibbonGroup
+        Me.button_getUserProperties = Me.Factory.CreateRibbonButton
+        Me.Button5 = Me.Factory.CreateRibbonButton
         Me.Group6 = Me.Factory.CreateRibbonGroup
+        Me.button_discipline = Me.Factory.CreateRibbonButton
         Me.label_discipline = Me.Factory.CreateRibbonLabel
         Me.Group2 = Me.Factory.CreateRibbonGroup
         Me.Label3 = Me.Factory.CreateRibbonLabel
@@ -60,23 +71,13 @@
         Me.Box3 = Me.Factory.CreateRibbonBox
         Me.Label1 = Me.Factory.CreateRibbonLabel
         Me.label_version = Me.Factory.CreateRibbonLabel
-        Me.Button1 = Me.Factory.CreateRibbonButton
-        Me.button_OfflineFilesCount = Me.Factory.CreateRibbonButton
-        Me.button_pushOfflineFilestoServer = Me.Factory.CreateRibbonButton
-        Me.button_viewOfflineFiles = Me.Factory.CreateRibbonButton
-        Me.Button2 = Me.Factory.CreateRibbonButton
-        Me.button_recordEmail = Me.Factory.CreateRibbonButton
-        Me.button_MoveEmail = Me.Factory.CreateRibbonButton
-        Me.button_getUserProperties = Me.Factory.CreateRibbonButton
-        Me.button_discipline = Me.Factory.CreateRibbonButton
-        Me.Button3 = Me.Factory.CreateRibbonButton
-        Me.Button4 = Me.Factory.CreateRibbonButton
         Me.Tab1.SuspendLayout()
         Me.Group1.SuspendLayout()
         Me.Box1.SuspendLayout()
         Me.Group3.SuspendLayout()
         Me.Box2.SuspendLayout()
         Me.Group5.SuspendLayout()
+        Me.Group7.SuspendLayout()
         Me.Group6.SuspendLayout()
         Me.Group2.SuspendLayout()
         Me.Group4.SuspendLayout()
@@ -89,6 +90,7 @@
         Me.Tab1.Groups.Add(Me.Group1)
         Me.Tab1.Groups.Add(Me.Group3)
         Me.Tab1.Groups.Add(Me.Group5)
+        Me.Tab1.Groups.Add(Me.Group7)
         Me.Tab1.Groups.Add(Me.Group6)
         Me.Tab1.Groups.Add(Me.Group2)
         Me.Tab1.Groups.Add(Me.Group4)
@@ -101,6 +103,14 @@
         Me.Group1.Items.Add(Me.Box1)
         Me.Group1.Label = "Network"
         Me.Group1.Name = "Group1"
+        '
+        'Button1
+        '
+        Me.Button1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.Button1.Image = Global.AT_EngJournal.My.Resources.Resources.network_connect_3
+        Me.Button1.Label = "Check"
+        Me.Button1.Name = "Button1"
+        Me.Button1.ShowImage = True
         '
         'Box1
         '
@@ -127,6 +137,30 @@
         Me.Group3.Items.Add(Me.Box2)
         Me.Group3.Label = "Offline Files"
         Me.Group3.Name = "Group3"
+        '
+        'button_OfflineFilesCount
+        '
+        Me.button_OfflineFilesCount.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_OfflineFilesCount.Image = Global.AT_EngJournal.My.Resources.Resources.view_refresh_4
+        Me.button_OfflineFilesCount.Label = "ReScan"
+        Me.button_OfflineFilesCount.Name = "button_OfflineFilesCount"
+        Me.button_OfflineFilesCount.ShowImage = True
+        '
+        'button_pushOfflineFilestoServer
+        '
+        Me.button_pushOfflineFilestoServer.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_pushOfflineFilestoServer.Image = Global.AT_EngJournal.My.Resources.Resources.document_save_3
+        Me.button_pushOfflineFilestoServer.Label = "Push Offline Files to Server"
+        Me.button_pushOfflineFilestoServer.Name = "button_pushOfflineFilestoServer"
+        Me.button_pushOfflineFilestoServer.ShowImage = True
+        '
+        'button_viewOfflineFiles
+        '
+        Me.button_viewOfflineFiles.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_viewOfflineFiles.Image = Global.AT_EngJournal.My.Resources.Resources.edit_find_project
+        Me.button_viewOfflineFiles.Label = "View Offline Files"
+        Me.button_viewOfflineFiles.Name = "button_viewOfflineFiles"
+        Me.button_viewOfflineFiles.ShowImage = True
         '
         'Box2
         '
@@ -156,9 +190,53 @@
         Me.Group5.Items.Add(Me.Button2)
         Me.Group5.Items.Add(Me.button_recordEmail)
         Me.Group5.Items.Add(Me.button_MoveEmail)
-        Me.Group5.Items.Add(Me.button_getUserProperties)
-        Me.Group5.Label = "Record"
+        Me.Group5.Label = "Received Emails"
         Me.Group5.Name = "Group5"
+        '
+        'Button2
+        '
+        Me.Button2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.Button2.Image = Global.AT_EngJournal.My.Resources.Resources.view_refresh_4
+        Me.Button2.Label = "Process SentMail"
+        Me.Button2.Name = "Button2"
+        Me.Button2.ShowImage = True
+        '
+        'button_recordEmail
+        '
+        Me.button_recordEmail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_recordEmail.Image = Global.AT_EngJournal.My.Resources.Resources.mail_receive
+        Me.button_recordEmail.Label = "Record Selected Email"
+        Me.button_recordEmail.Name = "button_recordEmail"
+        Me.button_recordEmail.ShowImage = True
+        '
+        'button_MoveEmail
+        '
+        Me.button_MoveEmail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_MoveEmail.Image = Global.AT_EngJournal.My.Resources.Resources.mail_forward_5
+        Me.button_MoveEmail.Label = "Move Recorded Email"
+        Me.button_MoveEmail.Name = "button_MoveEmail"
+        Me.button_MoveEmail.ShowImage = True
+        '
+        'Group7
+        '
+        Me.Group7.Items.Add(Me.button_getUserProperties)
+        Me.Group7.Items.Add(Me.Button5)
+        Me.Group7.Label = "Email Tools"
+        Me.Group7.Name = "Group7"
+        '
+        'button_getUserProperties
+        '
+        Me.button_getUserProperties.Image = Global.AT_EngJournal.My.Resources.Resources.documentation
+        Me.button_getUserProperties.Label = "Get Message Properties"
+        Me.button_getUserProperties.Name = "button_getUserProperties"
+        Me.button_getUserProperties.ShowImage = True
+        '
+        'Button5
+        '
+        Me.Button5.Image = Global.AT_EngJournal.My.Resources.Resources.dialog_close_2
+        Me.Button5.Label = "Clear Message Properties"
+        Me.Button5.Name = "Button5"
+        Me.Button5.ShowImage = True
         '
         'Group6
         '
@@ -167,6 +245,11 @@
         Me.Group6.Label = "Discipline"
         Me.Group6.Name = "Group6"
         '
+        'button_discipline
+        '
+        Me.button_discipline.Label = "Change Discipline"
+        Me.button_discipline.Name = "button_discipline"
+        '
         'label_discipline
         '
         Me.label_discipline.Label = "-"
@@ -174,8 +257,6 @@
         '
         'Group2
         '
-        Me.Group2.Items.Add(Me.Button3)
-        Me.Group2.Items.Add(Me.Button4)
         Me.Group2.Items.Add(Me.Label3)
         Me.Group2.Label = "Test"
         Me.Group2.Name = "Group2"
@@ -208,85 +289,6 @@
         Me.label_version.Label = "-"
         Me.label_version.Name = "label_version"
         '
-        'Button1
-        '
-        Me.Button1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.Button1.Image = Global.AT_EngJournal.My.Resources.Resources.network_connect_3
-        Me.Button1.Label = "Check"
-        Me.Button1.Name = "Button1"
-        Me.Button1.ShowImage = True
-        '
-        'button_OfflineFilesCount
-        '
-        Me.button_OfflineFilesCount.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.button_OfflineFilesCount.Image = Global.AT_EngJournal.My.Resources.Resources.view_refresh_4
-        Me.button_OfflineFilesCount.Label = "ReScan"
-        Me.button_OfflineFilesCount.Name = "button_OfflineFilesCount"
-        Me.button_OfflineFilesCount.ShowImage = True
-        '
-        'button_pushOfflineFilestoServer
-        '
-        Me.button_pushOfflineFilestoServer.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.button_pushOfflineFilestoServer.Image = Global.AT_EngJournal.My.Resources.Resources.document_save_3
-        Me.button_pushOfflineFilestoServer.Label = "Push Offline Files to Server"
-        Me.button_pushOfflineFilestoServer.Name = "button_pushOfflineFilestoServer"
-        Me.button_pushOfflineFilestoServer.ShowImage = True
-        '
-        'button_viewOfflineFiles
-        '
-        Me.button_viewOfflineFiles.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.button_viewOfflineFiles.Image = Global.AT_EngJournal.My.Resources.Resources.edit_find_project
-        Me.button_viewOfflineFiles.Label = "View Offline Files"
-        Me.button_viewOfflineFiles.Name = "button_viewOfflineFiles"
-        Me.button_viewOfflineFiles.ShowImage = True
-        '
-        'Button2
-        '
-        Me.Button2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.Button2.Image = Global.AT_EngJournal.My.Resources.Resources.view_refresh_4
-        Me.Button2.Label = "Process SentMail"
-        Me.Button2.Name = "Button2"
-        Me.Button2.ShowImage = True
-        '
-        'button_recordEmail
-        '
-        Me.button_recordEmail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.button_recordEmail.Image = Global.AT_EngJournal.My.Resources.Resources.mail_receive
-        Me.button_recordEmail.Label = "Record Selected Email"
-        Me.button_recordEmail.Name = "button_recordEmail"
-        Me.button_recordEmail.ShowImage = True
-        '
-        'button_MoveEmail
-        '
-        Me.button_MoveEmail.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.button_MoveEmail.Image = Global.AT_EngJournal.My.Resources.Resources.mail_forward_5
-        Me.button_MoveEmail.Label = "Move Recorded Email"
-        Me.button_MoveEmail.Name = "button_MoveEmail"
-        Me.button_MoveEmail.ShowImage = True
-        '
-        'button_getUserProperties
-        '
-        Me.button_getUserProperties.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.button_getUserProperties.Image = Global.AT_EngJournal.My.Resources.Resources.documentation
-        Me.button_getUserProperties.Label = "Get Message Properties"
-        Me.button_getUserProperties.Name = "button_getUserProperties"
-        Me.button_getUserProperties.ShowImage = True
-        '
-        'button_discipline
-        '
-        Me.button_discipline.Label = "Change Discipline"
-        Me.button_discipline.Name = "button_discipline"
-        '
-        'Button3
-        '
-        Me.Button3.Label = "Button3"
-        Me.Button3.Name = "Button3"
-        '
-        'Button4
-        '
-        Me.Button4.Label = "Button4"
-        Me.Button4.Name = "Button4"
-        '
         'ASL_Ribbon
         '
         Me.Name = "ASL_Ribbon"
@@ -304,6 +306,8 @@
         Me.Box2.PerformLayout()
         Me.Group5.ResumeLayout(False)
         Me.Group5.PerformLayout()
+        Me.Group7.ResumeLayout(False)
+        Me.Group7.PerformLayout()
         Me.Group6.ResumeLayout(False)
         Me.Group6.PerformLayout()
         Me.Group2.ResumeLayout(False)
@@ -321,7 +325,6 @@
     Friend WithEvents Button1 As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents Group2 As Microsoft.Office.Tools.Ribbon.RibbonGroup
     Friend WithEvents Button2 As Microsoft.Office.Tools.Ribbon.RibbonButton
-    Friend WithEvents Button3 As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents Group3 As Microsoft.Office.Tools.Ribbon.RibbonGroup
     Friend WithEvents button_pushOfflineFilestoServer As Microsoft.Office.Tools.Ribbon.RibbonButton
     Friend WithEvents button_OfflineFilesCount As Microsoft.Office.Tools.Ribbon.RibbonButton
@@ -345,7 +348,8 @@
     Friend WithEvents label_discipline As Microsoft.Office.Tools.Ribbon.RibbonLabel
     Friend WithEvents Label3 As Microsoft.Office.Tools.Ribbon.RibbonLabel
     Friend WithEvents Group6 As Microsoft.Office.Tools.Ribbon.RibbonGroup
-    Friend WithEvents Button4 As Microsoft.Office.Tools.Ribbon.RibbonButton
+    Friend WithEvents Button5 As Microsoft.Office.Tools.Ribbon.RibbonButton
+    Friend WithEvents Group7 As Microsoft.Office.Tools.Ribbon.RibbonGroup
 End Class
 
 Partial Class ThisRibbonCollection

@@ -109,7 +109,7 @@ Partial Class form_EmailRecord
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.button_skip
-        Me.ClientSize = New System.Drawing.Size(526, 151)
+        Me.ClientSize = New System.Drawing.Size(522, 147)
         Me.ControlBox = False
         Me.Controls.Add(Me.button_skip)
         Me.Controls.Add(Me.Panel1)

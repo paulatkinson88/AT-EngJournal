@@ -180,6 +180,12 @@ AT-EngJournal
 <member name="T:AT_EngJournal.ThisAddIn">
 
 </member>
+<member name="M:AT_EngJournal.ThisAddIn.Application_ItemRecord">
+ <summary>
+ This item can be called and all item s selected from the inbox will be moved to 
+ a project directory of the users choosing.
+ </summary>
+</member>
 <member name="M:AT_EngJournal.ThisAddIn.#ctor(Microsoft.Office.Tools.Outlook.Factory,System.IServiceProvider)">
 
 </member>

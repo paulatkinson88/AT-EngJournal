@@ -97,7 +97,13 @@ Public Class ThisAddIn
         End If
     End Sub
 
+    ''' <summary>
+    ''' This item can be called and all item s selected from the inbox will be moved to 
+    ''' a project directory of the users choosing.
+    ''' </summary>
     Public Sub Application_ItemRecord()
+        Dim ProjNumber As String = ""
+
         If Application.ActiveExplorer.Selection.Count = 0 Then Exit Sub
 
         'get the first selected item.
@@ -121,16 +127,27 @@ Public Class ThisAddIn
             frm.button_record.Enabled = False
             frm.ShowDialog()
 
-            If Not (frm.proj = "") Then
+            ProjNumber = frm.proj
+            If Not (ProjNumber = "") Then
                 'the user selected a project and wants to store it.
                 'set the message properties
 
                 For Each itm As Outlook.MailItem In emList
+                    'it is assumed that the mail items selected do not have any information
+                    'imbedded in them yet.
                     If (TypeOf itm Is Outlook.MailItem) Then
                         Dim ma As class_MailItemTools = New class_MailItemTools
                         ma.maItem = itm
+                        ma.proj = ProjNumber
+                        Dim st As String = ma.Format_DateTimeStamp()
+                        ma.timestamp = st
+                        ma.messagetype = "re"
+                        ma.processed = "False"
+                        ma.stored = "False"
 
-                        ASL_Tools.SaveMessage(ma, frm.proj)
+                        ma.Set_PropertyAccessorObj()
+
+                        ASL_Tools.SaveMessage(ma, ProjNumber)
 
                     End If
                 Next

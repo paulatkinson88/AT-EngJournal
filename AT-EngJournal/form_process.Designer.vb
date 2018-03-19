@@ -46,13 +46,13 @@ Partial Class form_process
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(349, 66)
+        Me.ClientSize = New System.Drawing.Size(345, 62)
         Me.ControlBox = False
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.ProgressBar1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "form_process"
-        Me.Opacity = 0.5R
+        Me.Opacity = 0.9R
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

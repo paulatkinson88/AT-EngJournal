@@ -38,23 +38,6 @@ Public Class ASL_Ribbon
 
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As RibbonControlEventArgs) Handles Button3.Click
-        If Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count = 0 Then Exit Sub
-
-        Dim em As Outlook.MailItem = Globals.ThisAddIn.Application.ActiveExplorer.Selection.Item(1)
-
-        Dim senderDomain As String = ASL_Tools.Get_Domain_From_Address(em.Parent.store.displayname.ToString)
-
-        If senderDomain = "asltd.com" Then
-            Dim resp As class_MailItemTools = New class_MailItemTools
-
-            resp.maItem = em
-            resp.Get_PropertyAccessorObj()
-            resp.show_properties()
-        End If
-
-    End Sub
-
     Public Sub test()
         Dim app As Outlook.Application = Globals.ThisAddIn.Application
         Dim accs As Outlook.Accounts = app.Session.Accounts
@@ -164,6 +147,9 @@ Public Class ASL_Ribbon
     End Sub
 
     Private Sub button_MoveEmail_Click(sender As Object, e As RibbonControlEventArgs) Handles button_MoveEmail.Click
+
+        Dim projNumber As String = ""
+
         If ASL_Tools.aslDiscipline = "" Then
             MsgBox("No Discipline set." & vbLf & "Click the Change Discipline button on the ASL Ribbon bar and set the Discipline.", vbCritical, "Error")
             Exit Sub
@@ -183,16 +169,19 @@ Public Class ASL_Ribbon
         Dim firstMessage As Outlook.MailItem = Globals.ThisAddIn.Application.ActiveExplorer.Selection(1)
         Dim firstMailItem As class_MailItemTools = New class_MailItemTools
         firstMailItem.maItem = firstMessage
-        firstMailItem.msgProp.Get_AllProperties(firstMailItem.maItem)
-        Dim oldProj As String = firstMailItem.msgProp.proj
+        firstMailItem.Get_PropertyAccessorObj()
+        Dim oldProj As String = firstMailItem.proj
 
         'get the new project number
         Dim frm As form_emailMove = New form_emailMove
         frm.ShowDialog()
-        If frm.proj = "" Then
+
+        projNumber = frm.proj
+
+        If projNumber = "" Then
             'no project number selected
             Exit Sub
-        ElseIf frm.proj = oldproj Then
+        ElseIf frm.proj = oldProj Then
             'the user selected the same project number
             Exit Sub
         End If
@@ -212,14 +201,14 @@ Public Class ASL_Ribbon
 
             Dim ma As class_MailItemTools = New class_MailItemTools
             ma.maItem = em
-            ma.msgProp.Get_AllProperties(ma.maItem)
+            ma.Get_PropertyAccessorObj()
 
-            If ma.msgProp.messagetype = "se" Then
+            If ma.messagetype = "se" Then
                 Dim fldInbox As String = fldObj(fldObj.Length - 3)
                 If fldInbox = "Inbox" Then
                     ma.Move_MailItem_OnStore(frm.proj)
                 End If
-            ElseIf ma.msgProp.messagetype = "re" Then
+            ElseIf ma.messagetype = "re" Then
                 Dim fldinbox As String = fldObj(fldObj.Length - 2)
                 If fldinbox = "Inbox" Then
                     ma.Move_MailItem_OnStore(frm.proj)
@@ -249,10 +238,10 @@ Public Class ASL_Ribbon
             resp.maItem = em
             resp.Get_PropertyAccessorObj()
 
-            If resp.msgProp.Get_ProjectProperty(resp.maItem) = "" Then
-                MsgBox("id: " & resp.maItem.EntryID & vbLf & "No message key set")
+            If resp.proj = "" Then
+                MsgBox("No message key set")
             Else
-                MsgBox("id: " & resp.maItem.EntryID & vbLf & "Project: " & resp.msgProp.proj & vbLf & "TimeStamp: " & resp.msgProp.timestamp & vbLf & "Type: " & resp.msgProp.messagetype & vbLf & "Processed: " & resp.msgProp.processed & vbLf & "Stored: " & resp.msgProp.stored)
+                MsgBox("Project: " & resp.proj & vbLf & "TimeStamp: " & resp.timestamp & vbLf & "Type: " & resp.messagetype & vbLf & "Processed: " & resp.processed & vbLf & "Stored: " & resp.stored)
             End If
         End If
 
@@ -267,19 +256,19 @@ Public Class ASL_Ribbon
         frm.Close()
     End Sub
 
-    Private Sub Button4_Click_2(sender As Object, e As RibbonControlEventArgs) Handles Button4.Click
+    Private Sub Button5_Click(sender As Object, e As RibbonControlEventArgs) Handles Button5.Click
         If Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count = 0 Then Exit Sub
+
+        'Debug.Print(Globals.ThisAddIn.Application.ActiveExplorer.Selection.Count.ToString)
+        'get the first selected item.
+        'if the store the item resides in is in the domain name asltd.com continue
 
         Dim em As Outlook.MailItem = Globals.ThisAddIn.Application.ActiveExplorer.Selection.Item(1)
 
-        Dim senderDomain As String = ASL_Tools.Get_Domain_From_Address(em.Parent.store.displayname.ToString)
+        Dim resp As class_MailItemTools = New class_MailItemTools
 
-        If senderDomain = "asltd.com" Then
-            Dim resp As class_MailItemTools = New class_MailItemTools
+        resp.maItem = em
+        resp.Reset_PropertyAccessorObj()
 
-            resp.maItem = em
-            resp.Set_PropertyAccessorObj()
-            'resp.show_properties()
-        End If
     End Sub
 End Class

@@ -74,4 +74,8 @@
             button_record.Enabled = False
         End If
     End Sub
+
+    Private Sub form_EmailRecord_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

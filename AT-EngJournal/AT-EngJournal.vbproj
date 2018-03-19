@@ -100,7 +100,9 @@
     <DocumentationFile>AT-EngJournal.xml</DocumentationFile>
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <!--
     This section defines properties that are set when the "Release" configuration is selected.
@@ -129,7 +131,9 @@
     <DocumentationFile>AT-EngJournal.xml</DocumentationFile>
     <RegisterForComInterop>false</RegisterForComInterop>
     <RemoveIntegerChecks>false</RemoveIntegerChecks>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>
+    </NoWarn>
+    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
   </PropertyGroup>
   <!--
     This section specifies references for the project.
@@ -354,7 +358,7 @@
     <OptionCompare>Binary</OptionCompare>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionStrict>Off</OptionStrict>
+    <OptionStrict>On</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>

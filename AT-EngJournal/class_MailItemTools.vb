@@ -2,7 +2,7 @@
 
 Public Class class_MailItemTools
     Public maItem As Outlook.MailItem
-    Public msgProp As class_MailProperties
+    'Public msgProp As class_MailProperties
 
     Public proj As String
     Public timestamp As String
@@ -11,8 +11,6 @@ Public Class class_MailItemTools
     Public stored As String
 
     Public Sub New()
-        msgProp = New class_MailProperties
-
         proj = ""
         timestamp = ""
         messagetype = ""
@@ -20,43 +18,76 @@ Public Class class_MailItemTools
         stored = ""
     End Sub
 
+    Public Function Format_DateTimeStamp() As String
+        Dim retVal As String = ""
+        Dim cD As Date = maItem.ReceivedTime
+        retVal = Format(cD, "yyyy-MM-dd-HHmmss")
+        Return retVal
+    End Function
+
     Public Sub show_properties()
         MsgBox("id: " & maItem.EntryID & vbLf & "Project: " & proj & vbLf & "TimeStamp: " & timestamp & vbLf & "Type: " & messagetype & vbLf & "Processed: " & processed & vbLf & "Stored: " & stored)
     End Sub
 
     Public Sub Set_PropertyAccessorObj()
-        Dim prop1 = "http://schemas.microsoft.com/mapi/string/{FFF40745-D92F-4C11-9E14-92701F001EB3}/78965"
-        'Dim propSt = "111-222-Kudo"
+        Dim prop1 = "http://schemas.microsoft.com/mapi/string/{00020386-0000-0000-C000-000000000046}/X-78965"
 
-        'Dim prop As String = "http://schemas.microsoft.com/mapi/string/{00020386-0000-0000-C000-000000000046}/78965"
-        Dim propSt As String = "(" & proj & ")(" & timestamp & ")(" & messagetype & ")(" & processed & ")(" & stored & ")()()"
+        Dim propSt As String = "(" & proj & ")(" & timestamp & ")(" & messagetype & ")(" & processed & ")(" & stored & ")()()(X-78965)"
+        Debug.Print("Set_PropertyAccessorObj:" & propSt)
         maItem.PropertyAccessor.SetProperty(prop1, propSt)
-        maItem.Save()
+        Try
+            maItem.Save()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
     End Sub
 
     Public Sub Get_PropertyAccessorObj()
-        'PR_TRANSPORT_MESSAGE_HEADERS
-        Dim PropName = "http://schemas.microsoft.com/mapi/string/{FFF40745-D92F-4C11-9E14-92701F001EB3}/78965"
+        'Dim PropName = "http://schemas.microsoft.com/mapi/proptag/0x007D001F"
+        Dim PropName = "http://schemas.microsoft.com/mapi/string/{00020386-0000-0000-C000-000000000046}/X-78965"
         Try
             Dim retVal As String = maItem.PropertyAccessor.GetProperty(PropName)
-            Debug.Print(retVal)
-            Dim arObj = retVal.Split("(")
-            If Not (arObj.Count = 0) Then
-                proj = arObj(0)
-                If arObj(1).Length > 0 Then
-                    timestamp = arObj(1).Substring(0, arObj(1).Length - 1)
+            'Debug.Print("Get_PropertyAccessorObj:retval" & retVal)
+            'Dim xdata = ""
+            'look for the (X-78965) string
+            Dim xsear1 = retVal.ToUpper.IndexOf("(X-78965)")
+            'Dim xsear2 = Nothing
+
+            Debug.Print("Get_PropertyAccessorObj:retval" & xsear1)
+            If xsear1 > 0 Then
+                'xsear2 = retVal.ToUpper.IndexOf("(X-78965)", xsear1 + 1)
+                'Debug.Print("Get_PropertyAccessorObj:retval" & xsear2)
+                'xdata = retVal.Substring(xsear1, xsear2 - xsear1)
+                'Debug.Print("E1a" & xdata)
+
+                Dim arObj = retVal.Split("(")
+                If Not (arObj.Count = 0) Then
+                    proj = arObj(1).Substring(0, arObj(1).Length - 1)
+                    If arObj(2).Length > 0 Then
+                        timestamp = arObj(2).Substring(0, arObj(2).Length - 1)
+                    End If
+                    If arObj(3).Length > 0 Then
+                        messagetype = arObj(3).Substring(0, arObj(3).Length - 1)
+                    End If
+                    If arObj(4).Length > 0 Then
+                        processed = arObj(4).Substring(0, arObj(4).Length - 1)
+                    End If
+                    If arObj(5).Length > 0 Then
+                        stored = arObj(5).Substring(0, arObj(5).Length - 1)
+                    End If
                 End If
-                If arObj(2).Length > 0 Then
-                    messagetype = arObj(2).Substring(0, arObj(2).Length - 1)
-                End If
-                If arObj(3).Length > 0 Then
-                    processed = arObj(3).Substring(0, arObj(3).Length - 1)
-                End If
-                If arObj(4).Length > 0 Then
-                    stored = arObj(4).Substring(0, arObj(4).Length - 1)
-                End If
+            Else
+                proj = ""
+                timestamp = ""
+                messagetype = ""
+                processed = ""
+                stored = ""
             End If
+
         Catch ex As Exception
+            'MsgBox("Get_PropertyAccessorObj:" & ex.Message)
+
             proj = ""
             timestamp = ""
             messagetype = ""
@@ -64,6 +95,16 @@ Public Class class_MailItemTools
             stored = ""
         End Try
 
+    End Sub
+
+    Public Sub Reset_PropertyAccessorObj()
+        Dim prop1 = "http://schemas.microsoft.com/mapi/string/{00020386-0000-0000-C000-000000000046}/X-78965"
+        maItem.PropertyAccessor.DeleteProperty(prop1)
+        Try
+            maItem.Save()
+        Catch ex As Exception
+            MsgBox("Reset_PropertyAccessorObj: " & ex.Message)
+        End Try
     End Sub
 
     '###################################################################
@@ -74,12 +115,12 @@ Public Class class_MailItemTools
         Debug.Print("Store_MailItem_OnStore")
         'copy the message to the folder
         '   find the projectfolder in the aslstore
-        Debug.Print("Store_MailItem_OnStore - proj:" & msgProp.proj)
-        Dim fld As Outlook.Folder = Get_ProjectFolder_OnStoreInbox(msgProp.proj)
+        Debug.Print("Store_MailItem_OnStore - proj:" & proj)
+        Dim fld As Outlook.Folder = Get_ProjectFolder_OnStoreInbox(proj)
         Debug.Print("Store_MailItem_OnStore - folder:" & fld.FolderPath)
         If IsNothing(fld) Then
             'create the project folder
-            fld = Create_ProjectFolder_OnStoreInbox(msgProp.proj)
+            fld = Create_ProjectFolder_OnStoreInbox(proj)
 
             If IsNothing(fld) Then
                 MsgBox("Error creating project in Inbox", vbCritical, "Error")
@@ -89,16 +130,21 @@ Public Class class_MailItemTools
 
         Try
             'if the message is a sent item then change the store folder to the sent item.
-            If msgProp.messagetype = "se" Then fld = Get_ProjectFolderSent_OnStoreInbox(fld)
+            If messagetype = "se" Then fld = Get_ProjectFolderSent_OnStoreInbox(fld)
 
             'if the folder is there then move the item
             If Not (IsNothing(fld)) Then
                 Debug.Print("Store_MailItem_OnStore - move:" & maItem.EntryID)
+                processed = "True"
+                Set_PropertyAccessorObj()
+
                 maItem = maItem.Move(fld)
+                'if the mail item is moved do you need to reset all the properties back to the email.
                 Debug.Print("Store_MailItem_OnStore - to:" & maItem.EntryID)
                 retVal = maItem
-                msgProp.Set_ProcessedProperty(True, maItem)
-                Debug.Print("Store_MailItem_OnStore - processed:" & msgProp.processed)
+
+
+                Debug.Print("Store_MailItem_OnStore - processed:" & processed)
                 Debug.Print("Store_MailItem_OnStore - save")
                 maItem.Save()
             End If
@@ -133,7 +179,7 @@ Public Class class_MailItemTools
             Remove_MailItem_OnNetwork()
 
             'if the message is a sent item then change the store folder to the sent item.
-            If msgProp.messagetype = "se" Then
+            If messagetype = "se" Then
                 newFld = Get_ProjectFolderSent_OnStoreInbox(newFld)
             End If
 
@@ -144,8 +190,10 @@ Public Class class_MailItemTools
                 Debug.Print("move_mailitem_onstore - " & retVal.EntryID)
                 maItem = retVal
 
-                msgProp.Set_ProjectProperty(newProj, maItem)
-                msgProp.Set_ProcessedProperty(True, maItem)
+                proj = newProj
+                processed = "True"
+                Set_PropertyAccessorObj()
+
                 maItem.Save()
                 Debug.Print("move_mailitem_onstore - save")
                 'once moved, store it on the network
@@ -154,7 +202,7 @@ Public Class class_MailItemTools
 
         Catch ex As Exception
             MsgBox("MailItem.Store_MailItem_OnStore:" & ex.Message)
-            msgProp.Set_ProcessedProperty(False, maItem)
+            processed = "False"
         End Try
 
         Return retVal
@@ -250,7 +298,7 @@ Public Class class_MailItemTools
             Return retVal
         End If
 
-        Dim st As String = "(" & msgProp.proj & ")(" & msgProp.timestamp & ")(" & msgProp.messagetype & ")"
+        Dim st As String = "(" & proj & ")(" & timestamp & ")(" & messagetype & ")"
 
         'check to see if the user is in the office.
         'if they are then save a copy of the email to the project folder
@@ -270,10 +318,12 @@ Public Class class_MailItemTools
                 retVal = True
             Catch ex As Exception
                 MsgBox("MailItem.Put_MailItem_OnNetwork:" & ex.Message)
-                msgProp.Set_StoredProperty(False, maItem)
+                stored = "False"
+                Set_PropertyAccessorObj()
             End Try
         Else
-            msgProp.Set_StoredProperty(False, maItem)
+            stored = "False"
+            Set_PropertyAccessorObj()
         End If
 
         Return retVal
@@ -282,7 +332,7 @@ Public Class class_MailItemTools
     Public Sub Remove_MailItem_OnNetwork()
         Dim fld As System.IO.DirectoryInfo = Get_ProjectDirectory_OnNetwork()
 
-        Dim st As String = "(" & msgProp.proj & ")(" & msgProp.timestamp & ")(" & msgProp.messagetype & ")"
+        Dim st As String = "(" & proj & ")(" & timestamp & ")(" & messagetype & ")"
         Dim fl = (fld.FullName & "\" & st & ".msg")
 
         If System.IO.File.Exists(fl) Then
@@ -301,7 +351,7 @@ Public Class class_MailItemTools
         Select Case ASL_Tools.aslDiscipline
             Case = "Electrical"
                 disc = "E"
-                discPath = "\E\CORRESPONDENCE"
+                discPath = "\E\Email\CORRESPONDENCE"
             Case = "Mechanical"
                 disc = "M"
                 discPath = "\M\CORRESPONDENCE"
@@ -314,7 +364,7 @@ Public Class class_MailItemTools
                 Exit Function
         End Select
 
-        Dim projDirectory As String = dirObj & msgProp.proj.Substring(0, 2) & "XX\" & msgProp.proj
+        Dim projDirectory As String = dirObj & proj.Substring(0, 2) & "XX\" & proj
         Dim username As String = ASL_Tools.aslStore.DisplayName
 
         'if the project directory exists then move to next check

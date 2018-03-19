@@ -214,6 +214,8 @@ Module ASL_Tools
         Dim fldRoot As Outlook.Folder = ASL_Tools.aslStore.GetRootFolder
         Dim fldIn As Outlook.Folder = Nothing
 
+        frm.Refresh()
+
         For Each fld As Outlook.Folder In fldRoot.Folders
             If fld.Name = "Inbox" Then
                 fldIn = fld
@@ -244,7 +246,8 @@ Module ASL_Tools
                         'put the mail item into the custom class mail item
                         Dim ma As class_MailItemTools = New class_MailItemTools
                         ma.maItem = msIt
-                        Dim sto As String = ma.msgProp.Get_StoredProperty(ma.maItem)
+                        ma.Get_PropertyAccessorObj()
+                        Dim sto As String = ma.stored
                         If sto = "False" Then
                             ASL_Tools.offlineFileCount = ASL_Tools.offlineFileCount + 1
                             ASL_Tools.msList.Add(msIt)
@@ -264,11 +267,11 @@ Module ASL_Tools
                     'put the mail item into the custom class mail item
                     Dim ma As class_MailItemTools = New class_MailItemTools
                     ma.maItem = obj
+                    ma.Get_PropertyAccessorObj()
 
                     Try
                         'get the other custom properties of the message.
-                        ma.msgProp.Get_AllProperties(ma.maItem)
-                        If ma.msgProp.stored = False Then
+                        If ma.stored = False Then
                             Try
                                 ma.Put_MailItem_OnNetwork()
                             Catch ex As Exception
@@ -296,7 +299,7 @@ Module ASL_Tools
             'ma.msgProp.Get_AllProperties(ma.maItem)
 
             'ma.msgProp.Set_ProjectProperty(proj, ma.maItem)
-            Dim st As String = ma.msgProp.Format_DateTimeStamp(ma.maItem)
+            Dim st As String = ma.Format_DateTimeStamp()
             ma.timestamp = st
             ma.messagetype = "re"
             ma.processed = "False"
@@ -347,42 +350,27 @@ Module ASL_Tools
 
                 'try and get the custom category of the mail item that was stored when sent.
                 Try
-                    cat = ma.msgProp.Get_Category(ma.maItem)
-                    If cat.Length > 8 Then
-                        If cat.Substring(0, 7) = "Project" Then
-                            'if the project category key word is found then
-                            'get the other custom properties of the message.
-                            ma.msgProp.Get_AllProperties(ma.maItem)
+                    ma.Get_PropertyAccessorObj()
 
-                            Dim projnum As String = cat.Substring(cat.IndexOf("=") + 1, cat.Length - 8)
-                            ma.msgProp.Set_ProjectProperty(projnum, ma.maItem)
+                    If ma.proj.Length > 1 Then
+                        Dim st As String = ma.Format_DateTimeStamp()
+                        ma.timestamp = st
+                        ma.messagetype = "se"
+                        ma.processed = "False"
+                        ma.stored = "False"
 
-                            Dim st As String = ma.msgProp.Format_DateTimeStamp(ma.maItem)
-                            ma.msgProp.Set_TimeStampProperty(st, ma.maItem)
+                        ma.Set_PropertyAccessorObj()
 
-                            ma.msgProp.Set_MessageTypeProperty("se", ma.maItem)
-                            ma.msgProp.Set_ProcessedProperty(False, ma.maItem)
-                            ma.msgProp.Set_StoredProperty(False, ma.maItem)
+                        'once all the mail properties have been set
+                        'try to process the items.
+                        'if it fails then reset the processed property
+                        Try
+                            ma.Store_MailItem_OnStore()
+                            ma.Put_MailItem_OnNetwork()
+                        Catch ex As Exception
+                            MsgBox("MailProcess.MailStore:" & ex.Message)
+                        End Try
 
-                            'set the category back to nothing so that it doesnt get
-                            'added to the directory a second time.
-                            ma.msgProp.Set_Category("", ma.maItem)
-
-                            Dim accessorProp As String = ma.msgProp.Get_PropertyAccessorObj(ma.maItem)
-                            Debug.Print("Accessor:" & accessorProp)
-                            'once all the mail properties have been set
-                            'try to process the items.
-                            'if it fails then reset the processed property
-                            Try
-                                ma.Store_MailItem_OnStore()
-                                ma.Put_MailItem_OnNetwork()
-                                'ASL_Tools.msList.Add(ma)
-                            Catch ex As Exception
-                                MsgBox("MailProcess.MailStore:" & ex.Message)
-                                ma.msgProp.Set_Category(cat, ma.maItem)
-                            End Try
-
-                        End If
                     End If
                 Catch ex As Exception
                     MsgBox("MailProcess.Category:" & ex.Message)
