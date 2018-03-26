@@ -1,7 +1,7 @@
 ﻿Partial Class ASL_Ribbon
     Inherits Microsoft.Office.Tools.Ribbon.RibbonBase
 
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Public Sub New(ByVal container As System.ComponentModel.IContainer)
         MyClass.New()
 
@@ -12,7 +12,7 @@
 
     End Sub
 
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Public Sub New()
         MyBase.New(Globals.Factory.GetRibbonFactory())
 
@@ -22,7 +22,7 @@
     End Sub
 
     'Component overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -39,7 +39,7 @@
     'NOTE: The following procedure is required by the Component Designer
     'It can be modified using the Component Designer.
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.Tab1 = Me.Factory.CreateRibbonTab
         Me.Group1 = Me.Factory.CreateRibbonGroup
@@ -141,6 +141,7 @@
         'button_OfflineFilesCount
         '
         Me.button_OfflineFilesCount.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_OfflineFilesCount.Enabled = False
         Me.button_OfflineFilesCount.Image = Global.AT_EngJournal.My.Resources.Resources.view_refresh_4
         Me.button_OfflineFilesCount.Label = "ReScan"
         Me.button_OfflineFilesCount.Name = "button_OfflineFilesCount"
@@ -149,6 +150,7 @@
         'button_pushOfflineFilestoServer
         '
         Me.button_pushOfflineFilestoServer.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_pushOfflineFilestoServer.Enabled = False
         Me.button_pushOfflineFilestoServer.Image = Global.AT_EngJournal.My.Resources.Resources.document_save_3
         Me.button_pushOfflineFilestoServer.Label = "Push Offline Files to Server"
         Me.button_pushOfflineFilestoServer.Name = "button_pushOfflineFilestoServer"
@@ -157,6 +159,7 @@
         'button_viewOfflineFiles
         '
         Me.button_viewOfflineFiles.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
+        Me.button_viewOfflineFiles.Enabled = False
         Me.button_viewOfflineFiles.Image = Global.AT_EngJournal.My.Resources.Resources.edit_find_project
         Me.button_viewOfflineFiles.Label = "View Offline Files"
         Me.button_viewOfflineFiles.Name = "button_viewOfflineFiles"
@@ -187,7 +190,6 @@
         '
         'Group5
         '
-        Me.Group5.Items.Add(Me.Button2)
         Me.Group5.Items.Add(Me.button_recordEmail)
         Me.Group5.Items.Add(Me.button_MoveEmail)
         Me.Group5.Label = "Received Emails"
@@ -195,11 +197,9 @@
         '
         'Button2
         '
-        Me.Button2.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge
-        Me.Button2.Image = Global.AT_EngJournal.My.Resources.Resources.view_refresh_4
+        Me.Button2.Enabled = False
         Me.Button2.Label = "Process SentMail"
         Me.Button2.Name = "Button2"
-        Me.Button2.ShowImage = True
         '
         'button_recordEmail
         '
@@ -233,6 +233,7 @@
         '
         'Button5
         '
+        Me.Button5.Enabled = False
         Me.Button5.Image = Global.AT_EngJournal.My.Resources.Resources.dialog_close_2
         Me.Button5.Label = "Clear Message Properties"
         Me.Button5.Name = "Button5"
@@ -258,8 +259,10 @@
         'Group2
         '
         Me.Group2.Items.Add(Me.Label3)
+        Me.Group2.Items.Add(Me.Button2)
         Me.Group2.Label = "Test"
         Me.Group2.Name = "Group2"
+        Me.Group2.Visible = False
         '
         'Label3
         '

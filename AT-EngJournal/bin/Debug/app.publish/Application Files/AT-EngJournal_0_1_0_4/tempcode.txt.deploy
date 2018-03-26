@@ -1,0 +1,107 @@
+﻿Public Class form_EmailSend
+
+    Public Item As Outlook.MailItem
+    Public saveToNetwork As Boolean = False
+
+    Public tempobj As Boolean = False
+    Public fldSent As Outlook.Folder
+
+    Public di As System.IO.DirectoryInfo = Nothing
+    Public proj As String = ""
+
+
+
+    Private Sub button_record_Click(sender As Object, e As EventArgs) Handles button_record.Click
+        'begin the structure for the send function
+        proj = TextBox1.Text
+
+        
+
+
+
+
+        'if the project exists then store the message information to the server
+        Dim cD As Date = Date.Now
+        Dim uS As String = ASL_Tools.aslStore.DisplayName
+
+        Dim st As String = "(" & proj & ")(" & Format(cD, "yyyy-MM-dd-HHmmss") & ")(se)"
+        'get the email recieved date store this messageKeyValue in a user property in the message
+        'ASL_Tools.Set_StampProperty(Item, st)
+
+        'check to see if the user is in the office.
+        'if they are then save a copy of the email to the project folder
+        'if not then flag the message with the category offline
+        'offline messages can get copied to network at a later date.
+        Dim username As String = ASL_Tools.aslStore.DisplayName
+
+        If ASL_Tools.networkReady = True Then
+            'copy to network
+            di = ASL_Tools.Check_For_ProjectDirectoryEngJournal(proj, username)
+            If IsNothing(di) Then
+                Item.Categories = "Offline"
+            Else
+                'use the messageKeyValue as the message name when saving to the 
+                'network
+                'Store_MailItem_OnServer(proj, Item, "se", di)
+                saveToNetwork = True
+                ''itemCopy.SaveAs(di.FullName & "\" & st & ".msg")
+            End If
+        Else
+            Item.Categories = "Offline"
+        End If
+        tempobj = True
+
+        'Item.Move(fldSent)
+
+        Me.Close()
+    End Sub
+
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+        'do not enable the record button unless the project number selected is 4 digits and numeric.
+        If TextBox1.Text.Length = 4 And IsNumeric(TextBox1.Text) Then
+            button_record.Enabled = True
+        Else
+            button_record.Enabled = False
+        End If
+    End Sub
+
+    Private Sub button_skip_Click(sender As Object, e As EventArgs) Handles button_skip.Click
+        Me.Close()
+    End Sub
+End Class
+
+Public Function Store_MailItem_OnServer(proj As String, itm As Outlook.MailItem, typ As String, di As System.IO.DirectoryInfo) As Boolean
+        'return true if successful or false if not.
+        Dim retVal As Boolean = False
+
+        Dim EntryIdItem = itm.EntryID
+        Dim EntryIDStore = ASL_Tools.aslStore.StoreID
+        Dim retItm = Globals.ThisAddIn.Application.Session.GetItemFromID(EntryIdItem, EntryIDStore)
+
+        Dim cD As Date = Date.Now
+        Dim uS As String = ASL_Tools.aslStore.DisplayName
+
+        Dim st As String = "(" & proj & ")(" & Format(cD, "yyyy-MM-dd-HHmmss") & ")(" & typ & ")"
+        'get the email recieved date store this messageKeyValue in a user property in the message
+
+
+        'check to see if the user is in the office.
+        'if they are then save a copy of the email to the project folder
+        'if not then flag the message with the category offline
+        'offline messages can get copied to network at a later date.
+        Dim username As String = ASL_Tools.aslStore.DisplayName
+
+        If ASL_Tools.networkReady = True Then
+            Try
+                'ASL_Tools.Set_StampProperty(retItm, st & "(true)")
+                retItm.SaveAs(di.FullName & "\" & st & ".msg")
+                retVal = True
+            Catch ex As Exception
+                'ASL_Tools.Set_StampProperty(retItm, st & "(false)")
+            End Try
+        Else
+            ' ASL_Tools.Set_StampProperty(retItm, st & "(false)")
+        End If
+
+        Return retVal
+    End Function
